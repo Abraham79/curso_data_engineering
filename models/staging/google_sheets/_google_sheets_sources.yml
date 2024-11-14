@@ -11,13 +11,15 @@ sources:
       schema: false
       identifier: false
 
-    freshness:
-      warn_after: {count: 24, period: day}
-      error_after: {count: 48, period: day}
+#    freshness:
+#      warn_after: {count: 24, period: day}
+#      error_after: {count: 48, period: day}
 
     tables:
 
       - name: budget
+      - database: ALUMNO1_DEV_BRONZE_DB
+      - schema: GOOGLE_SHEETS
         loaded_at_field: _fivetran_synced
         columns:
           - name: _row

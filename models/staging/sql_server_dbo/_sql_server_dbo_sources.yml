@@ -16,6 +16,8 @@ sources:
 
     tables:
       - name: addresses
+      - database: ALUMNO1_DEV_BRONZE_DB
+      - schema: sql_server_dbo
         loaded_at_field: _fivetran_synced
         columns:
           - name: address
@@ -27,6 +29,8 @@ sources:
           - name: _fivetran_synced
 
       - name: events
+      - database: ALUMNO1_DEV_BRONZE_DB
+      - schema: sql_server_dbo
         loaded_at_field: _fivetran_synced
         columns:
           - name: created_at
@@ -41,6 +45,8 @@ sources:
           - name: _fivetran_synced
 
       - name: orders
+      - database: ALUMNO1_DEV_BRONZE_DB
+      - schema: sql_server_dbo
         loaded_at_field: _fivetran_synced
         columns:
           - name: address_id
@@ -60,6 +66,8 @@ sources:
           - name: _fivetran_synced
 
       - name: order_items
+      - database: ALUMNO1_DEV_BRONZE_DB
+      - schema: sql_server_dbo
         loaded_at_field: _fivetran_synced
         columns:
           - name: address_id
@@ -70,6 +78,8 @@ sources:
           - name: _fivetran_synced
 
       - name: products
+      - database: ALUMNO1_DEV_BRONZE_DB
+      - schema: sql_server_dbo
         loaded_at_field: _fivetran_synced
         columns:
           - name: inventory
@@ -80,6 +90,8 @@ sources:
           - name: _fivetran_synced
 
       - name: promos
+      - database: ALUMNO1_DEV_BRONZE_DB
+      - schema: sql_server_dbo
         loaded_at_field: _fivetran_synced
         columns:
           - name: discount
@@ -89,6 +101,8 @@ sources:
           - name: _fivetran_synced
 
       - name: users
+      - database: ALUMNO1_DEV_BRONZE_DB
+      - schema: sql_server_dbo
         loaded_at_field: _fivetran_synced
         columns:
           - name: address_id
