@@ -13,8 +13,8 @@ renamed as (
         product_id,
         quantity,
         -- _fivetran_deleted,
-        -- CONVERT_TIMEZONE('UTC', current_timestamp())::_fivetran_synced 
-        _fivetran_synced
+        _fivetran_synced, 
+        {{ dbt_date.convert_timezone("_fivetran_synced", "UTC", "America/Los_Angeles") }} as UTC
     from source
 
 )

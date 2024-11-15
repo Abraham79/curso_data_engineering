@@ -15,7 +15,6 @@ renamed as (
         last_name,
         created_at,
         phone_number,
-        total_orders,
         first_name,
         email,
         _fivetran_deleted,

@@ -55,4 +55,5 @@ seeds:
 #  require_explicit_package_overrides_for_builtin_materializations: False
 #  source_freshness_run_project_hooks: True
 
-
+vars:
+    "dbt_date:time_zone": "America/Los_Angeles"
