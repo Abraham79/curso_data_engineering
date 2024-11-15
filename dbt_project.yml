@@ -40,6 +40,19 @@ models:
     # Applies to all files under models/example/
     example:
       +materialized: table
+#  elementary:
+#    ## elementary models will be created in the schema '<your_schema>_elementary'
+#    +schema: "elementary"
+#    ## To disable elementary for dev, uncomment this:
+#    # enabled: "{{ target.name in ['prod','analytics'] }}"
+
 seeds:
   +database: "alumno1_dev_bronze_db"
   +schema: "seeds"
+
+## Required from dbt 1.8 and above for certain Elementary features
+#flags:
+#  require_explicit_package_overrides_for_builtin_materializations: False
+#  source_freshness_run_project_hooks: True
+
+
