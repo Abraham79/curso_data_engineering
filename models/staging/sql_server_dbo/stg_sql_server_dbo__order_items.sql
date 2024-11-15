@@ -12,9 +12,9 @@ renamed as (
         order_id,
         product_id,
         quantity,
-        _fivetran_deleted,
+        -- _fivetran_deleted,
+        -- CONVERT_TIMEZONE('UTC', current_timestamp())::_fivetran_synced 
         _fivetran_synced
-
     from source
 
 )

@@ -60,12 +60,19 @@ sources:
           - name: _fivetran_synced
 
       - name: order_items
+        description: 'Quantity of each product in a single order'
         loaded_at_field: _fivetran_synced
         columns:
-          - name: address_id
-          - name: created_at
           - name: product_id
+            tests:
+              - not_null
+              - relationships:
+                  field: product_id
+                  to: ref('sql_server_dbo', 'products')
           - name: quantity
+            tests:
+            - not_null
+            - positive_values
           - name: _fivetran_deleted
           - name: _fivetran_synced
 
