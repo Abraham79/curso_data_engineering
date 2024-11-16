@@ -19,7 +19,7 @@ with
             created_at,
             CASE
                 WHEN promo_id in {{valid_promo_name}} then LOWER(promo_id)
-                ELSE null 
+                ELSE 'none' 
             END as promo_name,
             md5(promo_name) as promo_id,
             estimated_delivery_at,
@@ -31,7 +31,7 @@ with
             status,
             _fivetran_deleted,
             _fivetran_synced
-        from source
+        from source 
 
     )
 
