@@ -5,11 +5,7 @@ with
     renamed as (
      
         {% set valid_promos = dbt_utils.get_column_values(table=ref("stg_sql_server_dbo__promos"), column='promo_id') %}
-        
         {% set valid_shipping_service = ("dhl", "fedex", "ups", "usps") %}
-        {% set valid_promo_name = ("task-force", "leverage", "Mandatory", "Digitized", "instruction set", "Optional") %}
-
-        
 
         select
             order_id,
@@ -22,7 +18,7 @@ with
             address_id,
             created_at,
             CASE
-                WHEN promo_id in ({{ "'" ~ valid_promos | join("', '") ~ "'"}}) then LOWER(promo_id)
+                WHEN promo_id in ({{ "'" ~ valid_promos | join("', '") ~ "'"}}) then LOWER(REPLACE(promo_id, ' ', '_'))
                 ELSE 'none' 
             END as promo_name,
             md5(promo_name) as promo_id,
