@@ -44,18 +44,38 @@ sources:
         loaded_at_field: _fivetran_synced
         columns:
           - name: address_id
+            tests:
+              - not_null
           - name: created_at
+            tests:
+              - not_null
           - name: delivered_at
           - name: estimated_delivery_at
           - name: order_cost
+            tests:
+              - not_null              
           - name: order_id
+            tests:
+              - not_null
+              - unique    
           - name: order_total
+            tests:
+              - not_null
           - name: promo_id
+            tests:
+              - not_null
+              - relationships:
+                  field: promo_id
+                  to: ref('sql_server_dbo', 'promos')
           - name: shipping_cost
           - name: shipping_service
           - name: status
+            tests: 
+              - not_null
           - name: tracking_id
           - name: user_id
+            tests:
+              - not_null
           - name: _fivetran_deleted
           - name: _fivetran_synced
 
@@ -91,6 +111,12 @@ sources:
         columns:
           - name: discount
           - name: promo_id
+            tests:
+              - unique
+              - not_null
+              - relationships:
+                  field: promo_id
+                  to: ref('sql_server_dbo', 'orders')
           - name: status
           - name: _fivetran_deleted
           - name: _fivetran_synced
