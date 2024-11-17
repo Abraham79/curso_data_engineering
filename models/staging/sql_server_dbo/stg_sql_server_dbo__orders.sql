@@ -18,7 +18,7 @@ with
             address_id,
             created_at,
             CASE
-                WHEN promo_id in ({{ "'" ~ valid_promos | join("', '") ~ "'"}}) then {{ reformat_string('promo_id') }}
+                WHEN promo_id in ('{{ valid_promos | join("', '") }}') then {{ reformat_string('promo_id') }}
                 ELSE 'none' 
             END as promo_name,
             md5(promo_name) as promo_id,
