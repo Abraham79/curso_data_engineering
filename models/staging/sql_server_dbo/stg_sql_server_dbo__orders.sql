@@ -31,7 +31,7 @@ with
             tracking_id,
             status,
             --_fivetran_deleted,
-            _fivetran_synced as insert_date
+            {{ to_utc("_fivetran_synced") }} as insert_date_utc
         from source 
 
     )

@@ -56,7 +56,8 @@ sources:
           - name: estimated_delivery_at
           - name: order_cost
             tests:
-              - not_null              
+              - not_null
+              - positive_values          
           - name: order_id
             tests:
               - not_null
@@ -64,6 +65,7 @@ sources:
           - name: order_total
             tests:
               - not_null
+              - positive_values
           - name: promo_id
             tests:
               - not_null
@@ -71,14 +73,21 @@ sources:
                   field: promo_id
                   to: ref('sql_server_dbo', 'promos')
           - name: shipping_cost
+            tests:
+              - positive_values
           - name: shipping_service
           - name: status
             tests: 
               - not_null
+              - accepted_values:
+                  values: ["delivered", "preparing", "shipped"]
           - name: tracking_id
           - name: user_id
             tests:
               - not_null
+              - relationships:
+                  field: user_id
+                  to: ref('sql_server_dbo', 'users')
           - name: _fivetran_deleted
           - name: _fivetran_synced
 
