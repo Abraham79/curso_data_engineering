@@ -8,6 +8,7 @@ with
         
         select
             order_id,
+            --nullif(TRIM(shipping_service, '')) as shipping_service,
             CASE
                 WHEN shipping_service LIKE '' THEN replace(shipping_service, '', NULL)
                 ELSE shipping_service

@@ -46,6 +46,9 @@ sources:
           - name: address_id
             tests:
               - not_null
+              - relationships:
+                  field: address_idd
+                  to: ref('sql_server_dbo', 'addresses')             
           - name: created_at
             tests:
               - not_null
