@@ -11,7 +11,7 @@ with
             shipping_cost_eur,
             address_id,
             created_at,
-            promo_name,
+            -- promo_name,
             promo_id,
             estimated_delivery_at,
             order_cost_eur,
