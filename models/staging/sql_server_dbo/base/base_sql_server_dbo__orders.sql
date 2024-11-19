@@ -3,8 +3,6 @@ with
     source as (select * from {{ source("sql_server_dbo", "orders") }}),
 
     renamed as (
-     
-        {% set valid_promos = dbt_utils.get_column_values(table=ref("stg_sql_server_dbo__promos"), column='promo_id') %}
         
         select
             order_id,
@@ -13,10 +11,7 @@ with
             shipping_cost as shipping_cost_eur,
             address_id,
             created_at,
-            CASE
-                WHEN promo_id in ('{{ valid_promos | join("', '") }}') then {{ tidy_string('promo_id') }}
-                ELSE 'none' 
-            END as promo_name,
+            nullif(TRIM({{ tidy_string('promo_id') }}), '') as promo_name,
             {{ dbt_utils.generate_surrogate_key(['promo_id']) }} as promo_id,
             estimated_delivery_at,
             order_cost as order_cost_eur,
