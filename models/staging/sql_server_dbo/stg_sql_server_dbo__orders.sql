@@ -22,11 +22,10 @@ with
                 ELSE 'none' 
             END as promo_name,
             {{ dbt_utils.generate_surrogate_key(['promo_id']) }} as promo_id,
-            --md5(promo_name) as promo_id,
             estimated_delivery_at,
             order_cost as order_cost_eur,
             user_id,
-            order_total as order_total_eur,
+            -- order_total as order_total_eur,
             delivered_at,
             tracking_id,
             status,
