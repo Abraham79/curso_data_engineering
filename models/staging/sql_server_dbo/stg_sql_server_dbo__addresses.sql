@@ -14,8 +14,8 @@ renamed as (
         country,
         address,
         state,
-        _fivetran_deleted,
-        _fivetran_synced
+        --_fivetran_deleted,
+        {{ to_utc("_fivetran_synced") }} as insert_date_utc
 
     from source
 
