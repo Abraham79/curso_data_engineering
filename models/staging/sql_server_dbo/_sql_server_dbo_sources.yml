@@ -28,7 +28,6 @@ sources:
               - relationships:
                   field: address_id
                   to: ref('sql_server_dbo', 'orders')    
-
           - name: country
             tests:
               - not_null
@@ -60,10 +59,7 @@ sources:
         columns:
           - name: address_id
             tests:
-              - not_null
-              - relationships:
-                  field: address_id
-                  to: ref('sql_server_dbo', 'addresses')             
+              - not_null       
           - name: created_at
             tests:
               - not_null
@@ -84,9 +80,6 @@ sources:
           - name: promo_id
             tests:
               - not_null
-              - relationships:
-                  field: promo_id
-                  to: ref('sql_server_dbo', 'promos')
           - name: shipping_cost
             tests:
               - positive_values

@@ -10,7 +10,7 @@ renamed as (
 
     select
         product_id,
-        price as product_price_eur,
+        price as product_price_usd,
         name as promo_name,
         inventory,
         --_fivetran_deleted,
