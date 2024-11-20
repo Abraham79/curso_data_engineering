@@ -15,10 +15,11 @@ renamed as (
         user_id,
         product_id,
         session_id,
-        created_at,
+        {{ to_utc("created_at") }} as created_at_utc,
         order_id,
-        _fivetran_deleted,
-        _fivetran_synced
+        --_fivetran_deleted,
+        {{ to_utc("_fivetran_synced") }} as insert_date_utc
+       
 
     from source
 

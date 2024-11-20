@@ -43,14 +43,34 @@ sources:
       - name: events
         loaded_at_field: _fivetran_synced
         columns:
-          - name: created_at
+          - name: created_at                   
+            tests:
+              - not_null
           - name: event_id
+            tests:
+              - unique
+              - not_null
           - name: event_type
           - name: order_id
+            tests:
+              - not_null
+              - relationships:
+                    field: order_id
+                    to: ref('sql_server_dbo', 'orders')  
           - name: page_url
           - name: product_id
+            tests:
+              - not_null
+              - relationships:
+                    field: product_id
+                    to: ref('sql_server_dbo', 'products')
           - name: session_id
           - name: user_id
+            tests:
+              - not_null
+              - relationships:
+                    field: user_id
+                    to: ref('sql_server_dbo', 'users')
           - name: _fivetran_deleted
           - name: _fivetran_synced
 
@@ -122,6 +142,9 @@ sources:
           - name: inventory
           - name: name
           - name: price
+            tests:
+            - not_null
+            - positive_values
           - name: product_id
           - name: _fivetran_deleted
           - name: _fivetran_synced
@@ -158,5 +181,8 @@ sources:
           - name: total_orders
           - name: updated_at
           - name: user_id
+            tests:
+              - unique
+              - not_null
           - name: _fivetran_deleted
           - name: _fivetran_synced
