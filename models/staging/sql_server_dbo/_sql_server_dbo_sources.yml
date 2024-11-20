@@ -18,11 +18,26 @@ sources:
       - name: addresses
         loaded_at_field: _fivetran_synced
         columns:
-          - name: address
-          - name: address_id
+          - name: address                    
+            tests:
+              - not_null
+          - name: address_id          
+            tests:
+              - not_null
+              - unique
+              - relationships:
+                  field: address_id
+                  to: ref('sql_server_dbo', 'orders')    
+
           - name: country
-          - name: state
-          - name: zipcode
+            tests:
+              - not_null
+          - name: state          
+            tests:
+              - not_null
+          - name: zipcode          
+            tests:
+              - not_null
           - name: _fivetran_deleted
           - name: _fivetran_synced
 
@@ -47,7 +62,7 @@ sources:
             tests:
               - not_null
               - relationships:
-                  field: address_idd
+                  field: address_id
                   to: ref('sql_server_dbo', 'addresses')             
           - name: created_at
             tests:
@@ -137,6 +152,11 @@ sources:
         loaded_at_field: _fivetran_synced
         columns:
           - name: address_id
+            tests:
+              - not_null
+              - relationships:
+                  field: address_id
+                  to: ref('sql_server_dbo', 'addresses')   
           - name: created_at
           - name: email
           - name: first_name

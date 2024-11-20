@@ -10,15 +10,15 @@ renamed as (
 
     select
         user_id,
-        updated_at,
+        {{ to_utc("created_at") }} as created_at_utc,
+        {{ to_utc("updated_at") }} as updated_at_utc,
         address_id,
         last_name,
-        created_at,
-        phone_number,
         first_name,
+        phone_number,
         email,
-        _fivetran_deleted,
-        _fivetran_synced
+        -- _fivetran_deleted,
+        {{ to_utc("_fivetran_synced") }} as insert_date_utc
 
     from source
 

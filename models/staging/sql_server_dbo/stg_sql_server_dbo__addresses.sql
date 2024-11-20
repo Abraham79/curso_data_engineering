@@ -10,9 +10,9 @@ renamed as (
 
     select
         address_id,
+        address,
         zipcode,
         country,
-        address,
         state,
         --_fivetran_deleted,
         {{ to_utc("_fivetran_synced") }} as insert_date_utc
