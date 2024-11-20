@@ -11,9 +11,9 @@ renamed as (
     select
         _row,
         quantity,
-        month,
+        {{ to_utc("month") }} as month_utc,
         product_id,
-        _fivetran_synced
+        {{ to_utc("_fivetran_synced") }} as insert_date_utc
 
     from source
 
