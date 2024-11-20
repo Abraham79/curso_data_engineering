@@ -13,7 +13,7 @@ renamed as (
         price as product_price_usd,
         name as promo_name,
         inventory,
-        --_fivetran_deleted,
+        _fivetran_deleted as deleted,
         {{ to_utc("_fivetran_synced") }} as insert_date_utc
 
     from source

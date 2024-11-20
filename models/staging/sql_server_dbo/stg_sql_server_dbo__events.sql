@@ -17,7 +17,7 @@ renamed as (
         session_id,
         {{ to_utc("created_at") }} as created_at_utc,
         order_id,
-        --_fivetran_deleted,
+        _fivetran_deleted as deleted,
         {{ to_utc("_fivetran_synced") }} as insert_date_utc
        
 

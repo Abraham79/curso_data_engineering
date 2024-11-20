@@ -17,7 +17,7 @@ renamed as (
         first_name,
         phone_number,
         email,
-        -- _fivetran_deleted,
+        _fivetran_deleted as deleted,
         {{ to_utc("_fivetran_synced") }} as insert_date_utc
 
     from source

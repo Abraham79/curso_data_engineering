@@ -20,7 +20,7 @@ with
             {{ to_utc("delivered_at") }} as delivery_date_utc,
             tracking_id,
             status,
-            _fivetran_deleted,
+            _fivetran_deleted as deleted,
             {{ to_utc("_fivetran_synced") }} as insert_date_utc
         from source 
 

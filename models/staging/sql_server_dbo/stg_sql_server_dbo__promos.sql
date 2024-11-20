@@ -14,7 +14,7 @@ renamed as (
         md5(promo_name) as promo_id,
         discount as discount_usd,
         status,
-        --_fivetran_deleted,
+        _fivetran_deleted as deleted,
         {{ to_utc("_fivetran_synced") }} as insert_date_utc
 
     from source

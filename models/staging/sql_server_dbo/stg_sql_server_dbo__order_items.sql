@@ -12,7 +12,7 @@ renamed as (
         order_id,
         product_id,
         quantity,
-        -- _fivetran_deleted,
+        _fivetran_deleted as deleted,
         {{ to_utc("_fivetran_synced") }} as insert_date_utc
     from source
 

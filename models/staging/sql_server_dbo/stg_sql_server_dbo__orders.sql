@@ -20,7 +20,7 @@ with
             --delivery_date_utc,
             tracking_id,
             -- status,
-            --_fivetran_deleted,
+            deleted,
             insert_date_utc
         from source 
 
