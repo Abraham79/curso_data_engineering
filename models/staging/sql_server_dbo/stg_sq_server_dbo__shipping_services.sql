@@ -9,10 +9,12 @@ source as (
 renamed as (
 
     select distinct
-        shipping_service,
-        shipping_service_hash
+        
+        shipping_service_id,
+        shipping_service
 
     from source
+    order by shipping_service
 
 )
 
