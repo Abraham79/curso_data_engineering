@@ -1,0 +1,194 @@
+version: 2
+
+sources:
+  - name: sql_server_dbo # name of the source
+    schema: sql_server_dbo # this is the schema our raw data lives in
+    database: "{{ env_var('DBT_ENVIRONMENTS') }}_BRONZE_DB"  # this is the name of our database
+
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+
+    freshness:
+      warn_after: { count: 24, period: day }
+      error_after: { count: 48, period: day }
+
+    tables:
+      - name: addresses
+        description: 'Self descriptive'
+        loaded_at_field: _fivetran_synced
+        columns:
+          - name: address                    
+            tests:
+              - not_null
+          - name: address_id          
+            tests:
+              - not_null
+              - unique
+              - relationships:
+                  field: address_id
+                  to: ref('sql_server_dbo', 'orders')    
+          - name: country
+            tests:
+              - not_null
+          - name: state          
+            tests:
+              - not_null
+          - name: zipcode          
+            tests:
+              - not_null
+          - name: _fivetran_deleted
+          - name: _fivetran_synced
+
+      - name: events
+        description: 'tracks user interaction with website'
+        loaded_at_field: _fivetran_synced
+        columns:
+          - name: created_at                   
+            tests:
+              - not_null
+          - name: event_id
+            tests:
+              - unique
+              - not_null
+          - name: event_type
+          - name: order_id
+            tests:
+              - not_null
+              - relationships:
+                    field: order_id
+                    to: ref('sql_server_dbo', 'orders')  
+          - name: page_url
+          - name: product_id
+            tests:
+              - not_null
+              - relationships:
+                    field: product_id
+                    to: ref('sql_server_dbo', 'products')
+          - name: session_id
+          - name: user_id
+            tests:
+              - not_null
+              - relationships:
+                    field: user_id
+                    to: ref('sql_server_dbo', 'users')
+          - name: _fivetran_deleted
+          - name: _fivetran_synced
+
+      - name: orders
+        description: 'Self descriptive'
+        loaded_at_field: _fivetran_synced
+        columns:
+          - name: address_id
+            tests:
+              - not_null       
+          - name: created_at
+            tests:
+              - not_null
+          - name: delivered_at
+          - name: estimated_delivery_at
+          - name: order_cost
+            tests:
+              - not_null
+              - positive_values          
+          - name: order_id
+            tests:
+              - not_null
+              - unique    
+          - name: order_total
+            tests:
+              - not_null
+              - positive_values
+          - name: promo_id
+            tests:
+              - not_null
+          - name: shipping_cost
+            tests:
+              - positive_values
+          - name: shipping_service
+          - name: status
+            tests: 
+              - not_null
+              - accepted_values:
+                  values: ["delivered", "preparing", "shipped"]
+          - name: tracking_id
+          - name: user_id
+            tests:
+              - not_null
+              - relationships:
+                  field: user_id
+                  to: ref('sql_server_dbo', 'users')
+          - name: _fivetran_deleted
+          - name: _fivetran_synced
+
+      - name: order_items
+        description: 'Quantity of each product in a single order'
+        loaded_at_field: _fivetran_synced
+        columns:
+          - name: product_id
+            tests:
+              - not_null
+              - relationships:
+                  field: product_id
+                  to: ref('sql_server_dbo', 'products')
+          - name: quantity
+            tests:
+            - not_null
+            - positive_values
+          - name: _fivetran_deleted
+          - name: _fivetran_synced
+
+      - name: products
+        description: 'Self descriptive'
+        loaded_at_field: _fivetran_synced
+        columns:
+          - name: inventory
+          - name: name
+          - name: price
+            tests:
+            - not_null
+            - positive_values
+          - name: product_id
+          - name: _fivetran_deleted
+          - name: _fivetran_synced
+
+      - name: promos
+        description: 'Self descriptive'
+        loaded_at_field: _fivetran_synced
+        columns:
+          - name: discount
+          - name: promo_id
+            tests:
+              - unique
+              - not_null
+              - relationships:
+                  field: promo_id
+                  to: ref('sql_server_dbo', 'orders')
+          - name: status
+          - name: _fivetran_deleted
+          - name: _fivetran_synced
+
+      - name: users
+        description: 'Data from buyers'
+        loaded_at_field: _fivetran_synced
+        columns:
+          - name: address_id
+            tests:
+              - not_null
+              - relationships:
+                  field: address_id
+                  to: ref('sql_server_dbo', 'addresses')   
+          - name: created_at
+          - name: email
+          - name: first_name
+          - name: last_name
+          - name: phone_number
+          - name: total_orders
+          - name: updated_at
+          - name: user_id
+            tests:
+              - unique
+              - not_null
+          - name: _fivetran_deleted
+          - name: _fivetran_synced
