@@ -1,0 +1,674 @@
+version: 2
+
+sources:
+  - name: alumno1
+    description: ""
+    database: alumno1_dev_silver_db
+    tables:
+      - name: base_sql_server_dbo__orders
+        description: ""
+        columns:
+          - name: order_id
+            data_type: varchar
+            description: ""
+          - name: shipping_service
+            data_type: varchar
+            description: ""
+          - name: shipping_service_id
+            data_type: varchar
+            description: ""
+          - name: shipping_cost_usd
+            data_type: number
+            description: ""
+          - name: address_id
+            data_type: varchar
+            description: ""
+          - name: order_date_utc
+            data_type: timestamp_ntz
+            description: ""
+          - name: promo_name
+            data_type: varchar
+            description: ""
+          - name: promo_id
+            data_type: varchar
+            description: ""
+          - name: estimated_delivery_date_utc
+            data_type: timestamp_ntz
+            description: ""
+          - name: order_cost_usd
+            data_type: number
+            description: ""
+          - name: user_id
+            data_type: varchar
+            description: ""
+          - name: order_total_usd
+            data_type: number
+            description: ""
+          - name: delivery_date_utc
+            data_type: timestamp_ntz
+            description: ""
+          - name: tracking_id
+            data_type: varchar
+            description: ""
+          - name: status
+            data_type: varchar
+            description: ""
+          - name: deleted
+            data_type: boolean
+            description: ""
+          - name: insert_date_utc
+            data_type: timestamp_ntz
+            description: ""
+
+      - name: dbt_metrics_default_calendar
+        description: ""
+        columns:
+          - name: date_day
+            data_type: date
+            description: ""
+          - name: date_week
+            data_type: date
+            description: ""
+          - name: date_month
+            data_type: date
+            description: ""
+          - name: date_quarter
+            data_type: date
+            description: ""
+          - name: date_year
+            data_type: date
+            description: ""
+
+      - name: dim__time
+        description: ""
+        columns:
+          - name: date_day
+            data_type: date
+            description: ""
+          - name: prior_date_day
+            data_type: date
+            description: ""
+          - name: next_date_day
+            data_type: date
+            description: ""
+          - name: prior_year_date_day
+            data_type: date
+            description: ""
+          - name: prior_year_over_year_date_day
+            data_type: date
+            description: ""
+          - name: day_of_week
+            data_type: number
+            description: ""
+          - name: day_of_week_iso
+            data_type: number
+            description: ""
+          - name: day_of_week_name
+            data_type: varchar
+            description: ""
+          - name: day_of_week_name_short
+            data_type: varchar
+            description: ""
+          - name: day_of_month
+            data_type: number
+            description: ""
+          - name: day_of_year
+            data_type: number
+            description: ""
+          - name: week_start_date
+            data_type: date
+            description: ""
+          - name: week_end_date
+            data_type: date
+            description: ""
+          - name: prior_year_week_start_date
+            data_type: date
+            description: ""
+          - name: prior_year_week_end_date
+            data_type: date
+            description: ""
+          - name: week_of_year
+            data_type: number
+            description: ""
+          - name: iso_week_start_date
+            data_type: date
+            description: ""
+          - name: iso_week_end_date
+            data_type: date
+            description: ""
+          - name: prior_year_iso_week_start_date
+            data_type: date
+            description: ""
+          - name: prior_year_iso_week_end_date
+            data_type: date
+            description: ""
+          - name: iso_week_of_year
+            data_type: number
+            description: ""
+          - name: prior_year_week_of_year
+            data_type: number
+            description: ""
+          - name: prior_year_iso_week_of_year
+            data_type: number
+            description: ""
+          - name: month_of_year
+            data_type: number
+            description: ""
+          - name: month_name
+            data_type: varchar
+            description: ""
+          - name: month_name_short
+            data_type: varchar
+            description: ""
+          - name: month_start_date
+            data_type: date
+            description: ""
+          - name: month_end_date
+            data_type: date
+            description: ""
+          - name: prior_year_month_start_date
+            data_type: date
+            description: ""
+          - name: prior_year_month_end_date
+            data_type: date
+            description: ""
+          - name: quarter_of_year
+            data_type: number
+            description: ""
+          - name: quarter_start_date
+            data_type: date
+            description: ""
+          - name: quarter_end_date
+            data_type: date
+            description: ""
+          - name: year_number
+            data_type: number
+            description: ""
+          - name: year_start_date
+            data_type: date
+            description: ""
+          - name: year_end_date
+            data_type: date
+            description: ""
+
+
+      - name: stg__time
+        description: ""
+        columns:
+          - name: date_day
+            data_type: date
+            description: ""
+          - name: prior_date_day
+            data_type: date
+            description: ""
+          - name: next_date_day
+            data_type: date
+            description: ""
+          - name: prior_year_date_day
+            data_type: date
+            description: ""
+          - name: prior_year_over_year_date_day
+            data_type: date
+            description: ""
+          - name: day_of_week
+            data_type: number
+            description: ""
+          - name: day_of_week_iso
+            data_type: number
+            description: ""
+          - name: day_of_week_name
+            data_type: varchar
+            description: ""
+          - name: day_of_week_name_short
+            data_type: varchar
+            description: ""
+          - name: day_of_month
+            data_type: number
+            description: ""
+          - name: day_of_year
+            data_type: number
+            description: ""
+          - name: week_start_date
+            data_type: date
+            description: ""
+          - name: week_end_date
+            data_type: date
+            description: ""
+          - name: prior_year_week_start_date
+            data_type: date
+            description: ""
+          - name: prior_year_week_end_date
+            data_type: date
+            description: ""
+          - name: week_of_year
+            data_type: number
+            description: ""
+          - name: iso_week_start_date
+            data_type: date
+            description: ""
+          - name: iso_week_end_date
+            data_type: date
+            description: ""
+          - name: prior_year_iso_week_start_date
+            data_type: date
+            description: ""
+          - name: prior_year_iso_week_end_date
+            data_type: date
+            description: ""
+          - name: iso_week_of_year
+            data_type: number
+            description: ""
+          - name: prior_year_week_of_year
+            data_type: number
+            description: ""
+          - name: prior_year_iso_week_of_year
+            data_type: number
+            description: ""
+          - name: month_of_year
+            data_type: number
+            description: ""
+          - name: month_name
+            data_type: varchar
+            description: ""
+          - name: month_name_short
+            data_type: varchar
+            description: ""
+          - name: month_start_date
+            data_type: date
+            description: ""
+          - name: month_end_date
+            data_type: date
+            description: ""
+          - name: prior_year_month_start_date
+            data_type: date
+            description: ""
+          - name: prior_year_month_end_date
+            data_type: date
+            description: ""
+          - name: quarter_of_year
+            data_type: number
+            description: ""
+          - name: quarter_start_date
+            data_type: date
+            description: ""
+          - name: quarter_end_date
+            data_type: date
+            description: ""
+          - name: year_number
+            data_type: number
+            description: ""
+          - name: year_start_date
+            data_type: date
+            description: ""
+          - name: year_end_date
+            data_type: date
+            description: ""
+
+      - name: stg_google_sheets__budget
+        description: ""
+        columns:
+          - name: _row
+            data_type: number
+            description: ""
+          - name: product_id
+            data_type: varchar
+            description: ""
+          - name: quantity
+            data_type: number
+            description: ""
+          - name: month
+            data_type: number
+            description: ""
+          - name: insert_date_utc
+            data_type: timestamp_ntz
+            description: ""
+
+      - name: stg_prueba_snapshot__users
+        description: ""
+        columns:
+          - name: nombre
+            data_type: varchar
+            description: ""
+          - name: dni
+            data_type: varchar
+            description: ""
+          - name: email
+            data_type: varchar
+            description: ""
+          - name: fecha_alta_sistema
+            data_type: timestamp_ntz
+            description: ""
+
+      - name: stg_sq_server_dbo__shipping_services
+        description: ""
+        columns:
+          - name: shipping_service_id
+            data_type: varchar
+            description: ""
+          - name: shipping_service
+            data_type: varchar
+            description: ""
+
+      - name: stg_sq_server_dbo__time
+        description: ""
+        columns:
+          - name: date_day
+            data_type: date
+            description: ""
+          - name: prior_date_day
+            data_type: date
+            description: ""
+          - name: next_date_day
+            data_type: date
+            description: ""
+          - name: prior_year_date_day
+            data_type: date
+            description: ""
+          - name: prior_year_over_year_date_day
+            data_type: date
+            description: ""
+          - name: day_of_week
+            data_type: number
+            description: ""
+          - name: day_of_week_iso
+            data_type: number
+            description: ""
+          - name: day_of_week_name
+            data_type: varchar
+            description: ""
+          - name: day_of_week_name_short
+            data_type: varchar
+            description: ""
+          - name: day_of_month
+            data_type: number
+            description: ""
+          - name: day_of_year
+            data_type: number
+            description: ""
+          - name: week_start_date
+            data_type: date
+            description: ""
+          - name: week_end_date
+            data_type: date
+            description: ""
+          - name: prior_year_week_start_date
+            data_type: date
+            description: ""
+          - name: prior_year_week_end_date
+            data_type: date
+            description: ""
+          - name: week_of_year
+            data_type: number
+            description: ""
+          - name: iso_week_start_date
+            data_type: date
+            description: ""
+          - name: iso_week_end_date
+            data_type: date
+            description: ""
+          - name: prior_year_iso_week_start_date
+            data_type: date
+            description: ""
+          - name: prior_year_iso_week_end_date
+            data_type: date
+            description: ""
+          - name: iso_week_of_year
+            data_type: number
+            description: ""
+          - name: prior_year_week_of_year
+            data_type: number
+            description: ""
+          - name: prior_year_iso_week_of_year
+            data_type: number
+            description: ""
+          - name: month_of_year
+            data_type: number
+            description: ""
+          - name: month_name
+            data_type: varchar
+            description: ""
+          - name: month_name_short
+            data_type: varchar
+            description: ""
+          - name: month_start_date
+            data_type: date
+            description: ""
+          - name: month_end_date
+            data_type: date
+            description: ""
+          - name: prior_year_month_start_date
+            data_type: date
+            description: ""
+          - name: prior_year_month_end_date
+            data_type: date
+            description: ""
+          - name: quarter_of_year
+            data_type: number
+            description: ""
+          - name: quarter_start_date
+            data_type: date
+            description: ""
+          - name: quarter_end_date
+            data_type: date
+            description: ""
+          - name: year_number
+            data_type: number
+            description: ""
+          - name: year_start_date
+            data_type: date
+            description: ""
+          - name: year_end_date
+            data_type: date
+            description: ""
+
+      - name: stg_sql_server_dbo__addresses
+        description: ""
+        columns:
+          - name: address_id
+            data_type: varchar
+            description: ""
+          - name: address
+            data_type: varchar
+            description: ""
+          - name: zipcode
+            data_type: number
+            description: ""
+          - name: country
+            data_type: varchar
+            description: ""
+          - name: state
+            data_type: varchar
+            description: ""
+          - name: deleted
+            data_type: boolean
+            description: ""
+          - name: insert_date_utc
+            data_type: timestamp_ntz
+            description: ""
+
+      - name: stg_sql_server_dbo__events
+        description: ""
+        columns:
+          - name: event_id
+            data_type: varchar
+            description: ""
+          - name: page_url
+            data_type: varchar
+            description: ""
+          - name: event_type
+            data_type: varchar
+            description: ""
+          - name: user_id
+            data_type: varchar
+            description: ""
+          - name: product_id
+            data_type: varchar
+            description: ""
+          - name: session_id
+            data_type: varchar
+            description: ""
+          - name: created_at_utc
+            data_type: timestamp_ntz
+            description: ""
+          - name: order_id
+            data_type: varchar
+            description: ""
+          - name: deleted
+            data_type: boolean
+            description: ""
+          - name: insert_date_utc
+            data_type: timestamp_ntz
+            description: ""
+
+      - name: stg_sql_server_dbo__order_items
+        description: ""
+        columns:
+          - name: order_id
+            data_type: varchar
+            description: ""
+          - name: product_id
+            data_type: varchar
+            description: ""
+          - name: quantity
+            data_type: number
+            description: ""
+          - name: deleted
+            data_type: boolean
+            description: ""
+          - name: insert_date_utc
+            data_type: timestamp_ntz
+            description: ""
+
+      - name: stg_sql_server_dbo__orders
+        description: ""
+        columns:
+          - name: order_id
+            data_type: varchar
+            description: ""
+          - name: order_date_utc
+            data_type: timestamp_ntz
+            description: ""
+          - name: promo_id
+            data_type: varchar
+            description: ""
+          - name: order_cost_usd
+            data_type: number
+            description: ""
+          - name: user_id
+            data_type: varchar
+            description: ""
+          - name: deleted
+            data_type: boolean
+            description: ""
+          - name: insert_date_utc
+            data_type: timestamp_ntz
+            description: ""
+
+      - name: stg_sql_server_dbo__products
+        description: ""
+        columns:
+          - name: product_id
+            data_type: varchar
+            description: ""
+          - name: product_name
+            data_type: varchar
+            description: ""
+          - name: product_price_usd
+            data_type: number
+            description: ""
+          - name: product_stock
+            data_type: number
+            description: ""
+          - name: deleted
+            data_type: boolean
+            description: ""
+          - name: insert_date_utc
+            data_type: timestamp_ntz
+            description: ""
+
+      - name: stg_sql_server_dbo__promos
+        description: ""
+        columns:
+          - name: promo_name
+            data_type: varchar
+            description: ""
+          - name: promo_id
+            data_type: varchar
+            description: ""
+          - name: discount_usd
+            data_type: number
+            description: ""
+          - name: status
+            data_type: varchar
+            description: ""
+          - name: deleted
+            data_type: boolean
+            description: ""
+          - name: insert_date_utc
+            data_type: timestamp_ntz
+            description: ""
+
+      - name: stg_sql_server_dbo__shipping
+        description: ""
+        columns:
+          - name: order_id
+            data_type: varchar
+            description: ""
+          - name: shipping_cost_usd
+            data_type: number
+            description: ""
+          - name: order_date_utc
+            data_type: timestamp_ntz
+            description: ""
+          - name: estimated_delivery_date_utc
+            data_type: timestamp_ntz
+            description: ""
+          - name: delivery_date_utc
+            data_type: timestamp_ntz
+            description: ""
+          - name: tracking_id
+            data_type: varchar
+            description: ""
+          - name: status
+            data_type: varchar
+            description: ""
+          - name: deleted
+            data_type: boolean
+            description: ""
+          - name: insert_date_utc
+            data_type: timestamp_ntz
+            description: ""
+
+      - name: stg_sql_server_dbo__users
+        description: ""
+        columns:
+          - name: user_id
+            data_type: varchar
+            description: ""
+          - name: created_at_utc
+            data_type: timestamp_ntz
+            description: ""
+          - name: updated_at_utc
+            data_type: timestamp_ntz
+            description: ""
+          - name: address_id
+            data_type: varchar
+            description: ""
+          - name: last_name
+            data_type: varchar
+            description: ""
+          - name: first_name
+            data_type: varchar
+            description: ""
+          - name: phone_number
+            data_type: varchar
+            description: ""
+          - name: email
+            data_type: varchar
+            description: ""
+          - name: deleted
+            data_type: boolean
+            description: ""
+          - name: insert_date_utc
+            data_type: timestamp_ntz
+            description: ""
