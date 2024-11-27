@@ -17,7 +17,7 @@ with
             order_cost_usd,
             user_id,
             -- order_total as order_total_eur,
-            --delivery_date_utc,
+            -- delivery_date_utc,
             tracking_id,
             status,
             deleted,
