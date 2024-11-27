@@ -11,7 +11,7 @@ renamed as (
     select
         product_id,
         price as product_price_usd,
-        name as promo_name,
+        {{ tidy_string('name') }} as promo_name,
         inventory,
         _fivetran_deleted as deleted,
         {{ to_utc("_fivetran_synced") }} as insert_date_utc
