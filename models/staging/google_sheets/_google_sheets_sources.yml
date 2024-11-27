@@ -26,7 +26,10 @@ sources:
               - not_null                 
           - name: product_id
             tests:
-              - not_null   
+              - not_null
+              - relationships:
+                    field: product_id
+                    to: ref('sql_server_dbo', 'products')     
           - name: quantity
             tests:
               - positive_values
