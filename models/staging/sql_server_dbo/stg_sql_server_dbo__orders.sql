@@ -19,7 +19,7 @@ with
             -- order_total as order_total_eur,
             --delivery_date_utc,
             tracking_id,
-            -- status,
+            status,
             deleted,
             insert_date_utc
         from source 
