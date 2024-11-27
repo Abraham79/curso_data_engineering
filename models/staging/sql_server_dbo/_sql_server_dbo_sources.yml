@@ -144,6 +144,8 @@ sources:
         loaded_at_field: _fivetran_synced
         columns:
           - name: inventory
+            tests:
+            - positive_values
           - name: name
           - name: price
             tests:
@@ -166,6 +168,8 @@ sources:
                   field: promo_id
                   to: ref('sql_server_dbo', 'orders')
           - name: status
+            tests:
+            - not_null
           - name: _fivetran_deleted
           - name: _fivetran_synced
 
@@ -180,8 +184,12 @@ sources:
                   field: address_id
                   to: ref('sql_server_dbo', 'addresses')   
           - name: created_at
+            tests:
+              - not_null
           - name: email
           - name: first_name
+            tests:
+              - not_null
           - name: last_name
           - name: phone_number
           - name: total_orders
