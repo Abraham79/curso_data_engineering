@@ -1,458 +1,454 @@
 version: 2
 
-sources:
-  - name: alumno1
-    description: "Abraham García"
-    database: alumno1_dev_silver_db
-    tables:
-      - name: base_sql_server_dbo__orders
-        description: "Base transformations for orders"
-        columns:
-          - name: order_id          
-            data_type: varchar
-            description: "Unique ID for each order"
-          - name: shipping_service
-            data_type: varchar
-            description: "Shipping company of choice"
-          - name: shipping_service_id
-            data_type: varchar
-            description: "Hash from shipping company"
-          - name: shipping_cost_usd
-            data_type: number
-            description: "Shipping cost in USD"
-          - name: address_id
-            data_type: varchar
-            description: "Shipping address for this order_id"
-          - name: order_date_utc
-            data_type: timestamp_ntz
-            description: "Order date in UTC"
-          - name: promo_name
-            data_type: varchar
-            description: "Name of promo, where available, else null"
-          - name: promo_id
-            data_type: varchar
-            description: "Unique hash for each promo"
-          - name: estimated_delivery_date_utc
-            data_type: timestamp_ntz
-            description: "Estimated date of delivery"
-          - name: order_cost_usd
-            data_type: number
-            description: "Total cost of order including shipping costs and promo discounts"
-          - name: user_id
-            data_type: varchar
-            description: "Unique identifier for each buyer"
-          - name: order_total_usd
-            data_type: number
-            description: "Total cost of order excluding shipping costs and promo discounts"
-          - name: delivery_date_utc
-            data_type: timestamp_ntz
-            description: "Final date of delivery"
-          - name: tracking_id
-            data_type: varchar
-            description: "Unique identifier for any shipment"
-          - name: status
-            data_type: varchar
-            description: "Status of shipment/delivery"
-          - name: deleted
-            data_type: boolean
-            description: ""
-          - name: insert_date_utc
-            data_type: timestamp_ntz
-            description: ""
-            
-      - name: stg__time
-        description: "Time table for SILVER"
-        columns:
-          - name: date_day
-            data_type: date
-            description: "Self descriptive"
-          - name: prior_date_day
-            data_type: date
-            description: "Self descriptive"
-          - name: next_date_day
-            data_type: date
-            description: "Self descriptive"
-          - name: prior_year_date_day
-            data_type: date
-            description: "Self descriptive"
-          - name: prior_year_over_year_date_day
-            data_type: date
-            description: "Self descriptive"
-          - name: day_of_week
-            data_type: number
-            description: "Self descriptive"
-          - name: day_of_week_iso
-            data_type: number
-            description: "Self descriptive"
-          - name: day_of_week_name
-            data_type: varchar
-            description: "Self descriptive"
-          - name: day_of_week_name_short
-            data_type: varchar
-            description: "Self descriptive"
-          - name: day_of_month
-            data_type: number
-            description: "Self descriptive"
-          - name: day_of_year
-            data_type: number
-            description: "Self descriptive"
-          - name: week_start_date
-            data_type: date
-            description: "Self descriptive"
-          - name: week_end_date
-            data_type: date
-            description: "Self descriptive"
-          - name: prior_year_week_start_date
-            data_type: date
-            description: "Self descriptive"
-          - name: prior_year_week_end_date
-            data_type: date
-            description: "Self descriptive"
-          - name: week_of_year
-            data_type: number
-            description: "Self descriptive"
-          - name: iso_week_start_date
-            data_type: date
-            description: "Self descriptive"
-          - name: iso_week_end_date
-            data_type: date
-            description: "Self descriptive"
-          - name: prior_year_iso_week_start_date
-            data_type: date
-            description: "Self descriptive"
-          - name: prior_year_iso_week_end_date
-            data_type: date
-            description: "Self descriptive"
-          - name: iso_week_of_year
-            data_type: number
-            description: "Self descriptive"
-          - name: prior_year_week_of_year
-            data_type: number
-            description: "Self descriptive"
-          - name: prior_year_iso_week_of_year
-            data_type: number
-            description: "Self descriptive"
-          - name: month_of_year
-            data_type: number
-            description: "Self descriptive"
-          - name: month_name
-            data_type: varchar
-            description: "Self descriptive"
-          - name: month_name_short
-            data_type: varchar
-            description: "Self descriptive"
-          - name: month_start_date
-            data_type: date
-            description: "Self descriptive"
-          - name: month_end_date
-            data_type: date
-            description: "Self descriptive"
-          - name: prior_year_month_start_date
-            data_type: date
-            description: "Self descriptive"
-          - name: prior_year_month_end_date
-            data_type: date
-            description: "Self descriptive"
-          - name: quarter_of_year
-            data_type: number
-            description: "Self descriptive"
-          - name: quarter_start_date
-            data_type: date
-            description: "Self descriptive"
-          - name: quarter_end_date
-            data_type: date
-            description: "Self descriptive"
-          - name: year_number
-            data_type: number
-            description: "Self descriptive"
-          - name: year_start_date
-            data_type: date
-            description: "Self descriptive"
-          - name: year_end_date
-            data_type: date
-            description: "Self descriptive"
-
-      - name: stg_google_sheets__budget
+models:
+  - name: base_sql_server_dbo__orders
+    description: "Base transformations for orders"
+    columns:
+      - name: order_id          
+        data_type: varchar
+        description: "Unique ID for each order"
+      - name: shipping_service
+        data_type: varchar
+        description: "Shipping company of choice"
+      - name: shipping_service_id
+        data_type: varchar
+        description: "Hash from shipping company"
+      - name: shipping_cost_usd
+        data_type: number
+        description: "Shipping cost in USD"
+      - name: address_id
+        data_type: varchar
+        description: "Shipping address for this order_id"
+      - name: order_date_utc
+        data_type: timestamp_ntz
+        description: "Order date in UTC"
+      - name: promo_name
+        data_type: varchar
+        description: "Name of promo, where available, else null"
+      - name: promo_id
+        data_type: varchar
+        description: "Unique hash for each promo"
+      - name: estimated_delivery_date_utc
+        data_type: timestamp_ntz
+        description: "Estimated date of delivery"
+      - name: order_cost_usd
+        data_type: number
+        description: "Total cost of order including shipping costs and promo discounts"
+      - name: user_id
+        data_type: varchar
+        description: "Unique identifier for each buyer"
+      - name: order_total_usd
+        data_type: number
+        description: "Total cost of order excluding shipping costs and promo discounts"
+      - name: delivery_date_utc
+        data_type: timestamp_ntz
+        description: "Final date of delivery"
+      - name: tracking_id
+        data_type: varchar
+        description: "Unique identifier for any shipment"
+      - name: status
+        data_type: varchar
+        description: "Status of shipment/delivery"
+      - name: deleted
+        data_type: boolean
         description: ""
-        columns:
-          - name: _row
-            data_type: number
-            description: "Unique ID for any insert, incremental"
-          - name: product_id
-            data_type: varchar
-            description: "Unique ID from each product"
-            tests:
-              - relationships:
-                  field: product_id
-                  to: ref('sql_server_dbo', 'products')   
-          - name: quantity
-            data_type: number
-            description: "Stock available of such product in inventory"
-          - name: month
-            data_type: number
-            description: "Month new stock is added"
-          - name: insert_date_utc
-            data_type: timestamp_ntz
-            description: ""
-
-
-      - name: stg_sql_server_dbo__shipping_services
+      - name: insert_date_utc
+        data_type: timestamp_ntz
         description: ""
-        columns:
-          - name: shipping_service_id
-            data_type: varchar
-            description: "Unique ID for each shipping company"
-            tests:
-              - not_null
-              - unique  
-          - name: shipping_service
-            data_type: varchar
-            description: "Name of the shipping service company"
+        
+  - name: stg__time
+    description: "Time table for SILVER"
+    columns:
+      - name: date_day
+        data_type: date
+        description: "Self descriptive"
+      - name: prior_date_day
+        data_type: date
+        description: "Self descriptive"
+      - name: next_date_day
+        data_type: date
+        description: "Self descriptive"
+      - name: prior_year_date_day
+        data_type: date
+        description: "Self descriptive"
+      - name: prior_year_over_year_date_day
+        data_type: date
+        description: "Self descriptive"
+      - name: day_of_week
+        data_type: number
+        description: "Self descriptive"
+      - name: day_of_week_iso
+        data_type: number
+        description: "Self descriptive"
+      - name: day_of_week_name
+        data_type: varchar
+        description: "Self descriptive"
+      - name: day_of_week_name_short
+        data_type: varchar
+        description: "Self descriptive"
+      - name: day_of_month
+        data_type: number
+        description: "Self descriptive"
+      - name: day_of_year
+        data_type: number
+        description: "Self descriptive"
+      - name: week_start_date
+        data_type: date
+        description: "Self descriptive"
+      - name: week_end_date
+        data_type: date
+        description: "Self descriptive"
+      - name: prior_year_week_start_date
+        data_type: date
+        description: "Self descriptive"
+      - name: prior_year_week_end_date
+        data_type: date
+        description: "Self descriptive"
+      - name: week_of_year
+        data_type: number
+        description: "Self descriptive"
+      - name: iso_week_start_date
+        data_type: date
+        description: "Self descriptive"
+      - name: iso_week_end_date
+        data_type: date
+        description: "Self descriptive"
+      - name: prior_year_iso_week_start_date
+        data_type: date
+        description: "Self descriptive"
+      - name: prior_year_iso_week_end_date
+        data_type: date
+        description: "Self descriptive"
+      - name: iso_week_of_year
+        data_type: number
+        description: "Self descriptive"
+      - name: prior_year_week_of_year
+        data_type: number
+        description: "Self descriptive"
+      - name: prior_year_iso_week_of_year
+        data_type: number
+        description: "Self descriptive"
+      - name: month_of_year
+        data_type: number
+        description: "Self descriptive"
+      - name: month_name
+        data_type: varchar
+        description: "Self descriptive"
+      - name: month_name_short
+        data_type: varchar
+        description: "Self descriptive"
+      - name: month_start_date
+        data_type: date
+        description: "Self descriptive"
+      - name: month_end_date
+        data_type: date
+        description: "Self descriptive"
+      - name: prior_year_month_start_date
+        data_type: date
+        description: "Self descriptive"
+      - name: prior_year_month_end_date
+        data_type: date
+        description: "Self descriptive"
+      - name: quarter_of_year
+        data_type: number
+        description: "Self descriptive"
+      - name: quarter_start_date
+        data_type: date
+        description: "Self descriptive"
+      - name: quarter_end_date
+        data_type: date
+        description: "Self descriptive"
+      - name: year_number
+        data_type: number
+        description: "Self descriptive"
+      - name: year_start_date
+        data_type: date
+        description: "Self descriptive"
+      - name: year_end_date
+        data_type: date
+        description: "Self descriptive"
 
-      - name: stg_sql_server_dbo__addresses
-        description: "Addresses"
-        columns:
-          - name: address_id
-            data_type: varchar
-            description: "Unique ID for each address"
-          - name: address
-            data_type: varchar
-            description: "Self descriptive"
-          - name: zipcode
-            data_type: number
-            description: "Self descriptive"
-          - name: country
-            data_type: varchar
-            description: "Self descriptive"
-          - name: state
-            data_type: varchar
-            description: "Self descriptive"
-          - name: deleted
-            data_type: boolean
-            description: ""
-          - name: insert_date_utc
-            data_type: timestamp_ntz
-            description: ""
-
-      - name: stg_sql_server_dbo__events
-        description: "User clicks on webpage"
-        columns:
-          - name: event_id
-            data_type: varchar
-            description: "Unique ID for each event registered"
-          - name: page_url
-            data_type: varchar
-            description: "Web url"
-          - name: event_type
-            data_type: varchar
-            description: "Type of event"
-          - name: user_id
-            data_type: varchar
-            description: "Unique ID for each user"
-            tests:
-              - relationships:
-                  field: user_id
-                  to: ref('sql_server_dbo', 'users')   
-          - name: product_id
-            data_type: varchar
-            description: "Unique ID for each product"
-            tests:
-              - relationships:
-                  field: product_id
-                  to: ref('sql_server_dbo', 'products')   
-          - name: session_id
-            data_type: varchar
-            description: "Unique ID for each session"
-          - name: created_at_utc
-            data_type: timestamp_ntz
-            description: ""
-          - name: order_id
-            data_type: varchar
-            description: "Unique id for each order"
-            tests:
-              - relationships:
-                  field: order_id
-                  to: ref('sql_server_dbo', 'orders')   
-          - name: deleted
-            data_type: boolean
-            description: ""
-          - name: insert_date_utc
-            data_type: timestamp_ntz
-            description: ""
-
-      - name: stg_sql_server_dbo__order_items
-        description: "Products and quantity in each order"
-        columns:
-          - name: order_id
-            data_type: varchar
-            description: "Unique ID for each order"
-            tests:
-              - relationships:
-                  field: order_id
-                  to: ref('sql_server_dbo', 'orders')   
-          - name: product_id
-            data_type: varchar
-            description: "Unique ID for each product"
-            tests:
-              - relationships:
-                  field: product_id
-                  to: ref('sql_server_dbo', 'products')   
-          - name: quantity
-            data_type: number
-            description: "Quantity of each product in current order"
-          - name: deleted
-            data_type: boolean
-            description: ""
-          - name: insert_date_utc
-            data_type: timestamp_ntz
-            description: ""
-
-      - name: stg_sql_server_dbo__orders
+  - name: stg_google_sheets__budget
+    description: ""
+    columns:
+      - name: _row
+        data_type: number
+        description: "Unique ID for any insert, incremental"
+      - name: product_id
+        data_type: varchar
+        description: "Unique ID from each product"
+        tests:
+          - relationships:
+              field: product_id
+              to: ref('sql_server_dbo', 'products')   
+      - name: quantity
+        data_type: number
+        description: "Stock available of such product in inventory"
+      - name: month
+        data_type: number
+        description: "Month new stock is added"
+      - name: insert_date_utc
+        data_type: timestamp_ntz
         description: ""
-        columns:
-          - name: order_id
-            data_type: varchar
-            description: "Unique ID for each order"
-          - name: order_date_utc
-            data_type: timestamp_ntz
-            description: "Order date in UTF"
-          - name: promo_id
-            data_type: varchar
-            description: "Unique ID for each promo"
-            tests:
-              - relationships:
-                  field: promo_id
-                  to: ref('sql_server_dbo', 'promos')
-          - name: order_cost_usd
-            data_type: number
-            description: ""
-          - name: user_id
-            data_type: varchar
-            description: "Unique ID for each buyer"
-            tests:
-              - relationships:
-                  field: user_id
-                  to: ref('sql_server_dbo', 'users')
-          - name: deleted
-            data_type: boolean
-            description: ""
-          - name: insert_date_utc
-            data_type: timestamp_ntz
-            description: ""
 
-      - name: stg_sql_server_dbo__products
-        description: "Products sold by the company"
-        columns:
-          - name: product_id
-            data_type: varchar
-            description: "Unique ID for each product"
-          - name: product_name
-            data_type: varchar
-            description: "Name of the product"
-          - name: product_price_usd
-            data_type: number
-            description: "Product price in USD"
-          - name: product_stock
-            data_type: number
-            description: "Availability"
-          - name: deleted
-            data_type: boolean
-            description: ""
-          - name: insert_date_utc
-            data_type: timestamp_ntz
-            description: ""
 
-      - name: stg_sql_server_dbo__promos
-        description: "Promos, discount and status"
-        columns:
-          - name: promo_name
-            data_type: varchar
-            description: "Name of each promo"
-          - name: promo_id
-            data_type: varchar
-            description: "Unique ID for each promo"
-          - name: discount_usd
-            data_type: number
-            description: "Discount in USD"
-          - name: status
-            data_type: varchar
-            description: "Wether or not this promo is currently active"
-          - name: deleted
-            data_type: boolean
-            description: ""
-          - name: insert_date_utc
-            data_type: timestamp_ntz
-            description: ""
+  - name: stg_sql_server_dbo__shipping_services
+    description: ""
+    columns:
+      - name: shipping_service_id
+        data_type: varchar
+        description: "Unique ID for each shipping company"
+        tests:
+          - not_null
+          - unique  
+      - name: shipping_service
+        data_type: varchar
+        description: "Name of the shipping service company"
 
-      - name: stg_sql_server_dbo__shipping
-        description: "Shipping details"
-        columns:
-          - name: order_id
-            data_type: varchar
-            description: "Unique ID for each order"
-            tests:
-              - relationships:
-                  field: order_id
-                  to: ref('sql_server_dbo', 'orders')
-          - name: shipping_cost_usd
-            data_type: number
-            description: "Shipping cost in USD"
-          - name: order_date_utc
-            data_type: timestamp_ntz
-            description: "Date of purchase in UTC"
-          - name: estimated_delivery_date_utc
-            data_type: timestamp_ntz
-            description: "Estimated date of delivery in UTC"
-          - name: delivery_date_utc
-            data_type: timestamp_ntz
-            description: "Actual date of delivery"
-          - name: tracking_id
-            data_type: varchar
-            description: "Unique ID for each delivery" 
-            tests:
-              - relationships:
-                  field: tracking_id
-                  to: ref('sql_server_dbo', 'shipping')          
-          - name: status
-            data_type: varchar
-            description: "Shipment and delivery status"
-          - name: deleted
-            data_type: boolean
-            description: ""
-          - name: insert_date_utc
-            data_type: timestamp_ntz
-            description: ""
-
-      - name: stg_sql_server_dbo__users
+  - name: stg_sql_server_dbo__addresses
+    description: "Addresses"
+    columns:
+      - name: address_id
+        data_type: varchar
+        description: "Unique ID for each address"
+      - name: address
+        data_type: varchar
+        description: "Self descriptive"
+      - name: zipcode
+        data_type: number
+        description: "Self descriptive"
+      - name: country
+        data_type: varchar
+        description: "Self descriptive"
+      - name: state
+        data_type: varchar
+        description: "Self descriptive"
+      - name: deleted
+        data_type: boolean
         description: ""
-        columns:
-          - name: user_id
-            data_type: varchar
-            description: "Unique ID for each user"
-          - name: created_at_utc
-            data_type: timestamp_ntz
-            description: "Date of first enrollment"
-          - name: updated_at_utc
-            data_type: timestamp_ntz
-            description: "Last user modification date"
-          - name: address_id
-            data_type: varchar
-            description: "Current user address"
-          - name: last_name
-            data_type: varchar
-            description: "User last name"
-          - name: first_name
-            data_type: varchar
-            description: "User first name"
-          - name: phone_number
-            data_type: varchar
-            description: "User phone number"
-          - name: email
-            data_type: varchar
-            description: "User email, format verified but not tested"
-          - name: deleted
-            data_type: boolean
-            description: ""
-          - name: insert_date_utc
-            data_type: timestamp_ntz
-            description: ""
+      - name: insert_date_utc
+        data_type: timestamp_ntz
+        description: ""
+
+  - name: stg_sql_server_dbo__events
+    description: "User clicks on webpage"
+    columns:
+      - name: event_id
+        data_type: varchar
+        description: "Unique ID for each event registered"
+      - name: page_url
+        data_type: varchar
+        description: "Web url"
+      - name: event_type
+        data_type: varchar
+        description: "Type of event"
+      - name: user_id
+        data_type: varchar
+        description: "Unique ID for each user"
+        tests:
+          - relationships:
+              field: user_id
+              to: ref('sql_server_dbo', 'users')   
+      - name: product_id
+        data_type: varchar
+        description: "Unique ID for each product"
+        tests:
+          - relationships:
+              field: product_id
+              to: ref('sql_server_dbo', 'products')   
+      - name: session_id
+        data_type: varchar
+        description: "Unique ID for each session"
+      - name: created_at_utc
+        data_type: timestamp_ntz
+        description: ""
+      - name: order_id
+        data_type: varchar
+        description: "Unique id for each order"
+        tests:
+          - relationships:
+              field: order_id
+              to: ref('sql_server_dbo', 'orders')   
+      - name: deleted
+        data_type: boolean
+        description: ""
+      - name: insert_date_utc
+        data_type: timestamp_ntz
+        description: ""
+
+  - name: stg_sql_server_dbo__order_items
+    description: "Products and quantity in each order"
+    columns:
+      - name: order_id
+        data_type: varchar
+        description: "Unique ID for each order"
+        tests:
+          - relationships:
+              field: order_id
+              to: ref('sql_server_dbo', 'orders')   
+      - name: product_id
+        data_type: varchar
+        description: "Unique ID for each product"
+        tests:
+          - relationships:
+              field: product_id
+              to: ref('sql_server_dbo', 'products')   
+      - name: quantity
+        data_type: number
+        description: "Quantity of each product in current order"
+      - name: deleted
+        data_type: boolean
+        description: ""
+      - name: insert_date_utc
+        data_type: timestamp_ntz
+        description: ""
+
+  - name: stg_sql_server_dbo__orders
+    description: ""
+    columns:
+      - name: order_id
+        data_type: varchar
+        description: "Unique ID for each order"
+      - name: order_date_utc
+        data_type: timestamp_ntz
+        description: "Order date in UTF"
+      - name: promo_id
+        data_type: varchar
+        description: "Unique ID for each promo"
+        tests:
+          - relationships:
+              field: promo_id
+              to: ref('sql_server_dbo', 'promos')
+      - name: order_cost_usd
+        data_type: number
+        description: ""
+      - name: user_id
+        data_type: varchar
+        description: "Unique ID for each buyer"
+        tests:
+          - relationships:
+              field: user_id
+              to: ref('sql_server_dbo', 'users')
+      - name: deleted
+        data_type: boolean
+        description: ""
+      - name: insert_date_utc
+        data_type: timestamp_ntz
+        description: ""
+
+  - name: stg_sql_server_dbo__products
+    description: "Products sold by the company"
+    columns:
+      - name: product_id
+        data_type: varchar
+        description: "Unique ID for each product"
+      - name: product_name
+        data_type: varchar
+        description: "Name of the product"
+      - name: product_price_usd
+        data_type: number
+        description: "Product price in USD"
+      - name: product_stock
+        data_type: number
+        description: "Availability"
+      - name: deleted
+        data_type: boolean
+        description: ""
+      - name: insert_date_utc
+        data_type: timestamp_ntz
+        description: ""
+
+  - name: stg_sql_server_dbo__promos
+    description: "Promos, discount and status"
+    columns:
+      - name: promo_name
+        data_type: varchar
+        description: "Name of each promo"
+      - name: promo_id
+        data_type: varchar
+        description: "Unique ID for each promo"
+      - name: discount_usd
+        data_type: number
+        description: "Discount in USD"
+      - name: status
+        data_type: varchar
+        description: "Wether or not this promo is currently active"
+      - name: deleted
+        data_type: boolean
+        description: ""
+      - name: insert_date_utc
+        data_type: timestamp_ntz
+        description: ""
+
+  - name: stg_sql_server_dbo__shipping
+    description: "Shipping details"
+    columns:
+      - name: order_id
+        data_type: varchar
+        description: "Unique ID for each order"
+        tests:
+          - relationships:
+              field: order_id
+              to: ref('sql_server_dbo', 'orders')
+      - name: shipping_cost_usd
+        data_type: number
+        description: "Shipping cost in USD"
+      - name: order_date_utc
+        data_type: timestamp_ntz
+        description: "Date of purchase in UTC"
+      - name: estimated_delivery_date_utc
+        data_type: timestamp_ntz
+        description: "Estimated date of delivery in UTC"
+      - name: delivery_date_utc
+        data_type: timestamp_ntz
+        description: "Actual date of delivery"
+      - name: tracking_id
+        data_type: varchar
+        description: "Unique ID for each delivery" 
+        tests:
+          - relationships:
+              field: tracking_id
+              to: ref('sql_server_dbo', 'shipping')          
+      - name: status
+        data_type: varchar
+        description: "Shipment and delivery status"
+      - name: deleted
+        data_type: boolean
+        description: ""
+      - name: insert_date_utc
+        data_type: timestamp_ntz
+        description: ""
+
+  - name: stg_sql_server_dbo__users
+    description: ""
+    columns:
+      - name: user_id
+        data_type: varchar
+        description: "Unique ID for each user"
+      - name: created_at_utc
+        data_type: timestamp_ntz
+        description: "Date of first enrollment"
+      - name: updated_at_utc
+        data_type: timestamp_ntz
+        description: "Last user modification date"
+      - name: address_id
+        data_type: varchar
+        description: "Current user address"
+      - name: last_name
+        data_type: varchar
+        description: "User last name"
+      - name: first_name
+        data_type: varchar
+        description: "User first name"
+      - name: phone_number
+        data_type: varchar
+        description: "User phone number"
+      - name: email
+        data_type: varchar
+        description: "User email, format verified but not tested"
+      - name: deleted
+        data_type: boolean
+        description: ""
+      - name: insert_date_utc
+        data_type: timestamp_ntz
+        description: ""

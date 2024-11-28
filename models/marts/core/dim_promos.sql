@@ -2,8 +2,7 @@ with
 
 source as (
 
-    select * from {{ source('alumno1', 'stg_sql_server_dbo__promos') }}
-
+    select * from {{ ref('stg_sql_server_dbo__promos') }}
 ),
 
 renamed as (

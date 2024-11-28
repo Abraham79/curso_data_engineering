@@ -2,7 +2,7 @@ with
 
 source as (
 
-    select * from {{ source('alumno1', 'stg_google_sheets__budget') }}
+    select * from {{ ref('stg_google_sheets__budget') }}
 
 ),
 
