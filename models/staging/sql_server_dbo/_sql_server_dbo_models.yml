@@ -196,7 +196,7 @@ sources:
             description: ""
 
 
-      - name: stg_sq_server_dbo__shipping_services
+      - name: stg_sql_server_dbo__shipping_services
         description: ""
         columns:
           - name: shipping_service_id
