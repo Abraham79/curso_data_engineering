@@ -7,27 +7,27 @@ with cte_order_items as (
         quantity,
         COUNT(product_id)OVER(PARTITION BY order_id) AS num_prod_order
         
-    FROM {{ ref('fct_order_items') }}
+    FROM {{ ref('stg_sql_server_dbo__order_items') }}
 ),
 
 cte_products as (
 
     SELECT *
     
-    FROM {{ ref('dim_products') }}
+    FROM {{ ref('stg_sql_server_dbo__products') }}
 ), 
 
 cte_orders as (
 
     SELECT * 
-    FROM {{ ref('fct_orders') }}
+    FROM {{ ref('stg_sql_server_dbo__orders') }}
 
 ),
 
 cte_shipping as (
 
     SELECT * 
-    FROM {{ ref('dim_shipping') }}
+    FROM {{ ref('stg_sql_server_dbo__shipping') }}
 
 ),
 
@@ -36,7 +36,7 @@ renamed AS (
     SELECT 
         
         o.order_id,
-        o.user_id,
+        {{ single_row('o.user_id', 'user_id', 'oi.order_id' ) }}
         o.order_date_utc,
         p.product_id,
         o.promo_id,
@@ -47,8 +47,8 @@ renamed AS (
         {{ single_row('s.shipping_cost_usd', 'order_shipping_cost_usd', 'oi.order_id' ) }}
         product_price_usd*oi.quantity as total_per_product_usd,
         -- SUM(total_per_product)OVER(PARTITION BY o.order_id) as total_order,
-        {{ single_row('SUM(total_per_product_usd)OVER(PARTITION BY o.order_id)', 'total_order_before_shipping_usd', 'oi.order_id' ) }}
-        total_order_before_shipping_usd+order_shipping_cost_usd as total_order_plus_shipping_usd
+        {{ single_row('SUM(total_per_product_usd)OVER(PARTITION BY o.order_id)', 'order_total_before_shipping_usd', 'oi.order_id' ) }}
+        order_total_before_shipping_usd+order_shipping_cost_usd as order_total_plus_shipping_usd
         -- product_price_usd/total_order as shipping_ratio,
         -- ROUND(shipping_cost_usd*shipping_ratio*oi.quantity, 2) as distributed_shipping_cost,
         -- ROUND(shipping_cost_usd*shipping_ratio,2) as single_product_distributed_shipping_cost
