@@ -18,7 +18,7 @@ with
             user_id,
             -- order_total_usd,     /* Shipping cost ads no value for the company */
             -- delivery_date_utc,
-            -- tracking_id,
+            tracking_id,
             -- status,
             deleted,
             insert_date_utc

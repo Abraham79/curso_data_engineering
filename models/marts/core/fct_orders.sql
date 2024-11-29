@@ -12,6 +12,7 @@ renamed as (
         order_id,
         order_date_utc,
         promo_id,
+        tracking_id,
         order_cost_usd,
         user_id,
         deleted,
