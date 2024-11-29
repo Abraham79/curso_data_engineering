@@ -20,12 +20,11 @@ renamed as (
         o.order_id,
         o.user_id,
         o.promo_id,
-        o.promo_name,
+        ifnull(o.promo_name, 'no_promo') as promo_name,
         o.order_cost_usd,
-        p.discount_usd,
+        ifnull(p.discount_usd, 0) as discount_usd,
         o.shipping_cost_usd, 
-        (o.order_cost_usd+o.shipping_cost_usd-p.discount_usd) as order_total_usd_calc,
-        o.order_total_usd 
+        (o.order_cost_usd+o.shipping_cost_usd-p.discount_usd) as order_total_usd
 
     from cte_orders as o
     left join cte_promos as p
