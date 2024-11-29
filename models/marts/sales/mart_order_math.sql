@@ -31,7 +31,7 @@ renamed as (
         o.order_total_before_shipping_usd,
         p.discount_usd,
         s.shipping_cost_usd, 
-        (o.order_total_before_shipping_usd-p.discount_usd) as order_total_before_shipping_usd,
+        (o.order_total_before_shipping_usd-p.discount_usd) as order_total_before_shipping_usd2,
         (o.order_total_before_shipping_usd+s.shipping_cost_usd-p.discount_usd) as order_total_plus_shipping_usd
 
     from cte_orders as o
