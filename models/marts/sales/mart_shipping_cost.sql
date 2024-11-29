@@ -46,10 +46,10 @@ renamed AS (
         {{ single_row('num_prod_order', 'different_products_in_order', 'oi.order_id' ) }}
         {{ single_row('s.shipping_cost_usd', 'order_shipping_cost_usd', 'oi.order_id' ) }}
         product_price_usd*oi.quantity as total_per_product_usd,
-        SUM(total_per_product_usd)OVER(PARTITION BY o.order_id) as order_total,
+        --SUM(total_per_product_usd)OVER(PARTITION BY o.order_id) as order_total,
         {{ single_row('SUM(total_per_product_usd)OVER(PARTITION BY o.order_id)', 'order_total_before_shipping_usd', 'oi.order_id' ) }}
         order_total_before_shipping_usd+order_shipping_cost_usd as order_total_plus_shipping_usd,
-        product_price_usd/order_total as shipping_ratio,
+        product_price_usd/order_total_before_shipping_usd as shipping_ratio,
         ROUND(shipping_cost_usd*shipping_ratio*oi.quantity, 2) as distributed_shipping_cost,
         ROUND(shipping_cost_usd*shipping_ratio,2) as single_product_distributed_shipping_cost
 
