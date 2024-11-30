@@ -10,7 +10,7 @@ renamed as (
 
         select
             order_id,
-            -- shipping_service_id,
+            shipping_service_id,
             shipping_cost_usd,
             -- address_id,
             order_date_utc,
