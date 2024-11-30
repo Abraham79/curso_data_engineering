@@ -15,7 +15,15 @@ cte_promos as (
 
 cte_time as (
 
-    select * from {{ ref('dim_time') }}
+    select 
+    
+        day_of_week_name,
+        month_name,
+        quarter_of_year,
+        year_number,
+        date_day
+        
+     from {{ ref('dim_time') }}
 
 ),
 

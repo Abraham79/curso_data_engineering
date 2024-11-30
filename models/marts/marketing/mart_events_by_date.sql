@@ -10,14 +10,28 @@ cte_events as (
 
 cte_time as (
 
-    select * from {{ ref('dim_time') }}
+    select 
+    
+        day_of_week_name,
+        month_name,
+        quarter_of_year,
+        year_number,
+        date_day
+    
+    from {{ ref('dim_time') }}
 
 ),
 
 
 renamed as (
 
-    select *
+    select 
+
+        e.*,
+        t.day_of_week_name,
+        t.month_name,
+        t.quarter_of_year,
+        t.year_number
         
     from cte_events e
     left join cte_time t
