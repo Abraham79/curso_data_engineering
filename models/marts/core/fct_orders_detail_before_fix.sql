@@ -42,18 +42,18 @@ renamed AS (
     SELECT 
         
         o.order_id,
-        o.user_id,
+        {{ single_row('o.user_id', 'user_id', 'oi.order_id' ) }}
         o.order_date_utc,
-        oi.product_id,
+        p.product_id,
         o.promo_id,
         o.tracking_id,
-        --p.product_price_usd,
+        p.product_price_usd,
         oi.quantity AS this_product_quantity,
-        oi.num_prod_order as different_products_in_order,
-        -- s.shipping_cost_usd as order_shipping_cost_usd,
+        {{ single_row('num_prod_order', 'different_products_in_order', 'oi.order_id' ) }}
+        {{ single_row('s.shipping_cost_usd', 'order_shipping_cost_usd', 'oi.order_id' ) }}
         -- SUM(total_per_product)OVER(PARTITION BY o.order_id) as total_order,
         /*{{ single_row('SUM(total_per_product_usd)OVER(PARTITION BY o.order_id)', 'order_total_before_shipping_usd', 'oi.order_id' ) }}*/
-        o.order_cost_usd as order_total_before_shipping_usd,
+        {{ single_row('o.order_cost_usd', 'order_total_before_shipping_usd', 'oi.order_id' ) }}
         -- d.discount_usd,
         order_total_before_shipping_usd-d.discount_usd as order_total_income_usd,
         -- order_total_income_usd+order_shipping_cost_usd as user_payment

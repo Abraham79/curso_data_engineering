@@ -22,12 +22,12 @@ cte_time as (
 
 renamed as (
 
-    select 
+    select distinct
         o.order_id,
         -- count(distinct o.order_id)over(partition by t.year_number) as num_orders_per_year,
         -- count(distinct o.order_id)over(partition by t.month_name) as num_orders_per_month,
         o.order_date_utc,
-        o.product_id,
+        -- o.product_id,
         o.order_total_before_shipping_usd,
         p.discount_usd,
         o.order_total_income_usd,

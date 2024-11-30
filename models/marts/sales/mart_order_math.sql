@@ -18,6 +18,12 @@ cte_shipping as (
 
 ),
 
+cte_products as (
+
+    select * from {{ ref('dim_products') }}
+
+),
+
 
 renamed as (
 
@@ -27,18 +33,20 @@ renamed as (
         o.order_id,
         o.user_id,
         o.promo_id,
-        p.promo_name,
-        p.discount_usd,
+        d.promo_name,
+        d.discount_usd,
         /*{{ single_row('s.shipping_cost_usd','shipping_cost_usd', 'o.order_id' )}} */
         o.order_total_before_shipping_usd,
         o.order_total_income_usd,
-        o.product_price_usd*o.this_product_quantity as total_per_product_usd
+        p.product_price_usd*o.this_product_quantity as total_per_product_usd
 
-    from cte_orders as o
-    left join cte_promos as p
-    on o.promo_id = p.promo_id 
+    from cte_orders o
+    left join cte_promos d
+    on o.promo_id = d.promo_id 
     left join cte_shipping s
     on o.order_id = s.order_id
+    left join cte_products p
+    on o.product_id = p.product_id
 
 
 )
