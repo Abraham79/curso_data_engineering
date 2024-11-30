@@ -28,11 +28,11 @@ renamed as (
         o.user_id,
         o.promo_id,
         p.promo_name,
-        o.order_total_before_shipping_usd,
         p.discount_usd,
-        s.shipping_cost_usd, 
-        (o.order_total_before_shipping_usd-p.discount_usd) as order_total_before_shipping_usd2,
-        (o.order_total_before_shipping_usd+s.shipping_cost_usd-p.discount_usd) as order_total_plus_shipping_usd
+        /*{{ single_row('s.shipping_cost_usd','shipping_cost_usd', 'o.order_id' )}} */
+        o.order_total_before_shipping_usd,
+        o.order_total_income_usd,
+        o.product_price_usd*o.this_product_quantity as total_per_product_usd
 
     from cte_orders as o
     left join cte_promos as p
