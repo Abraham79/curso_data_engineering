@@ -63,6 +63,8 @@ models:
             +schema: core
           sales:
             +schema: sales
+          marketing:
+            +schema: marketing
 seeds:
   +schema: seed_data
   +database: "{{ env_var('DBT_ENVIRONMENTS') }}_BRONZE_DB"        
