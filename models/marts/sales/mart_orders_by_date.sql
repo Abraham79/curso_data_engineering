@@ -7,7 +7,16 @@ with cte_orders_detail as (
 
 cte_time as (
 
-    select * from {{ ref('dim_time') }}
+    select 
+    
+        day_of_week_iso,
+        day_of_week_name,
+        month_name,
+        quarter_of_year,
+        year_number,
+        date_day 
+        
+    from {{ ref('dim_time') }}
 
 ),
 
@@ -21,6 +30,7 @@ renamed as (
         o.order_date_utc,
         -- o.product_id,
         o.order_total_income_usd,
+        t.day_of_week_iso,
         t.day_of_week_name,
         t.month_name,
         t.quarter_of_year,

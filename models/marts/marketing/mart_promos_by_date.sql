@@ -17,6 +17,7 @@ cte_time as (
 
     select 
     
+        day_of_week_iso,
         day_of_week_name,
         month_name,
         quarter_of_year,
@@ -39,6 +40,7 @@ renamed as (
         o.order_total_before_shipping_usd,
         p.discount_usd,
         o.order_total_income_usd,
+        t.day_of_week_iso,
         t.day_of_week_name,
         t.month_name,
         t.quarter_of_year,

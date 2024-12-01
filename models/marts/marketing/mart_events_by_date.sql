@@ -12,6 +12,7 @@ cte_time as (
 
     select 
     
+        day_of_week_iso,
         day_of_week_name,
         month_name,
         quarter_of_year,
@@ -28,6 +29,7 @@ renamed as (
     select 
 
         e.*,
+        t.day_of_week_iso,
         t.day_of_week_name,
         t.month_name,
         t.quarter_of_year,

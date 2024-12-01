@@ -56,7 +56,7 @@ models:
         data_type: timestamp_ntz
         description: ""
         
-  - name: stg__time
+  - name: stg_time
     description: "Time table for SILVER"
     columns:
       - name: date_day
