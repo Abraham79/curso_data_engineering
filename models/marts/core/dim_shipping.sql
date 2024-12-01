@@ -15,6 +15,7 @@ renamed as (
         order_date_utc,
         estimated_delivery_date_utc,
         delivery_date_utc,
+        address_id,
         tracking_id,
         status,
         deleted,

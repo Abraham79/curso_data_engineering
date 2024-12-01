@@ -12,7 +12,7 @@ renamed as (
             order_id,
             shipping_service_id,
             shipping_cost_usd,
-            -- address_id,
+            address_id,
             order_date_utc,
             -- promo_name,
             -- promo_id,
