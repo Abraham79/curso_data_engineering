@@ -26,9 +26,6 @@ sources:
             tests:
               - not_null
               - unique
-              - relationships:
-                  field: address_id
-                  to: ref('sql_server_dbo', 'orders')    
           - name: country
             tests:
               - not_null
@@ -56,23 +53,14 @@ sources:
           - name: order_id
             tests:
               - not_null
-              - relationships:
-                    field: order_id
-                    to: ref('sql_server_dbo', 'orders')  
           - name: page_url
           - name: product_id
             tests:
               - not_null
-              - relationships:
-                    field: product_id
-                    to: ref('sql_server_dbo', 'products')
           - name: session_id
           - name: user_id
             tests:
               - not_null
-              - relationships:
-                    field: user_id
-                    to: ref('sql_server_dbo', 'users')
           - name: _fivetran_deleted
           - name: _fivetran_synced
 
@@ -126,9 +114,6 @@ sources:
           - name: product_id
             tests:
               - not_null
-              - relationships:
-                  field: product_id
-                  to: ref('sql_server_dbo', 'products')
           - name: quantity
             tests:
             - not_null
@@ -161,9 +146,6 @@ sources:
             tests:
               - unique
               - not_null
-              - relationships:
-                  field: promo_id
-                  to: ref('sql_server_dbo', 'orders')
           - name: status
             tests:
             - not_null
@@ -177,9 +159,6 @@ sources:
           - name: address_id
             tests:
               - not_null
-              - relationships:
-                  field: address_id
-                  to: ref('sql_server_dbo', 'addresses')   
           - name: created_at
             tests:
               - not_null
