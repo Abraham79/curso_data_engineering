@@ -2,6 +2,36 @@ version: 2
 
 
 models:
+  - name: mart_budget_sales_deviation
+    description: "Difference between sales and budget"
+    columns:
+      - name: month
+        data_type: number
+        description: "Month by number"
+        tests:
+          - not_null
+      - name: product_id
+        data_type: varchar
+        description: "Unique ID for each product"       
+        tests:
+          - relationships:
+              field: product_id
+              to: ref('dim_products')
+      - name: product_name
+        data_type: varchar
+        description: "Name of each product"
+        tests:
+          - not_null
+      - name: expected_sales
+        data_type: number
+        description: "Expected sales in USD"
+      - name: actual_sales
+        data_type: number
+        description: "Real sales in USD"
+      - name: deviation_from_budget
+        data_type: number
+        description: "Difference of expectations vs. reality"
+
   - name: mart_events_by_date
     description: "Website events by date"
     columns:
