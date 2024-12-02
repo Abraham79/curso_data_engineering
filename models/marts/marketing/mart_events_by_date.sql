@@ -37,7 +37,7 @@ renamed as (
         
     from cte_events e
     left join cte_time t
-    on CAST(e.created_at_utc as DATE) = t.date_day
+    on cast(e.created_at_utc as date) = t.date_day
         
 
 

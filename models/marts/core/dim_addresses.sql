@@ -9,6 +9,7 @@ source as (
 renamed as (
 
     select
+    
         address_id,
         address,
         zipcode,

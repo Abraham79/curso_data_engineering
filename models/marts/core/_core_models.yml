@@ -1,0 +1,372 @@
+version: 2
+
+models:
+  - name: dim_addresses
+    description: "Addresses"
+    columns:
+      - name: address_id
+        data_type: varchar
+        description: "Unique ID for each address"
+      - name: address
+        data_type: varchar
+        description: "Self descriptive"
+      - name: zipcode
+        data_type: number
+        description: "Self descriptive"
+      - name: country
+        data_type: varchar
+        description: "Self descriptive"
+      - name: state
+        data_type: varchar
+        description: "Self descriptive"
+      - name: deleted
+        data_type: boolean
+        description: ""
+      - name: insert_date_utc
+        data_type: timestamp_ntz
+        description: ""
+
+  - name: dim_products
+    description: "Products sold by the company"
+    columns:
+      - name: product_id
+        data_type: varchar
+        description: "Unique ID for each product"
+      - name: product_name
+        data_type: varchar
+        description: "Name of the product"
+      - name: product_price_usd
+        data_type: number
+        description: "Product price in USD"
+      - name: product_stock
+        data_type: number
+        description: "Availability"
+      - name: deleted
+        data_type: boolean
+        description: ""
+      - name: insert_date_utc
+        data_type: timestamp_ntz
+        description: ""
+
+  - name: dim_promos
+    description: "Promos, discount and status"
+    columns:
+      - name: promo_name
+        data_type: varchar
+        description: "Name of each promo"
+      - name: promo_id
+        data_type: varchar
+        description: "Unique ID for each promo"
+      - name: discount_usd
+        data_type: number
+        description: "Discount in USD"
+      - name: status
+        data_type: varchar
+        description: "Wether or not this promo is currently active"
+      - name: deleted
+        data_type: boolean
+        description: ""
+      - name: insert_date_utc
+        data_type: timestamp_ntz
+        description: ""
+
+  - name: dim_shipping
+    description: "Shipping details"
+    columns:
+      - name: order_id
+        data_type: varchar
+        description: "Unique ID for each order"
+        tests:
+          - relationships:
+              field: order_id
+              to: ref('dim_orders_detail')
+      - name: shipping_cost_usd
+        data_type: number
+        description: "Shipping cost in USD"
+      - name: order_date_utc
+        data_type: timestamp_ntz
+        description: "Date of purchase in UTC"
+      - name: estimated_delivery_date_utc
+        data_type: timestamp_ntz
+        description: "Estimated date of delivery in UTC"
+      - name: delivery_date_utc
+        data_type: timestamp_ntz
+        description: "Actual date of delivery"
+      - name: tracking_id
+        data_type: varchar
+        description: "Unique ID for each delivery"          
+      - name: status
+        data_type: varchar
+        description: "Shipment and delivery status"
+      - name: deleted
+        data_type: boolean
+        description: ""
+      - name: insert_date_utc
+        data_type: timestamp_ntz
+        description: ""
+
+  - name: dim_shipping_services
+    description: "Shipping service company"
+    columns:
+      - name: shipping_service_id
+        data_type: varchar
+        description: "Unique ID for each shipping company"
+        tests:
+          - not_null
+          - unique  
+      - name: shipping_service
+        data_type: varchar
+        description: "Name of the shipping service company"
+
+  - name: dim_time
+    description: ""
+    columns:
+      - name: date_day
+        data_type: date
+        description: ""
+      - name: prior_date_day
+        data_type: date
+        description: ""
+      - name: next_date_day
+        data_type: date
+        description: ""
+      - name: prior_year_date_day
+        data_type: date
+        description: ""
+      - name: prior_year_over_year_date_day
+        data_type: date
+        description: ""
+      - name: day_of_week
+        data_type: number
+        description: ""
+      - name: day_of_week_iso
+        data_type: number
+        description: ""
+      - name: day_of_week_name
+        data_type: varchar
+        description: ""
+      - name: day_of_week_name_short
+        data_type: varchar
+        description: ""
+      - name: day_of_month
+        data_type: number
+        description: ""
+      - name: day_of_year
+        data_type: number
+        description: ""
+      - name: week_start_date
+        data_type: date
+        description: ""
+      - name: week_end_date
+        data_type: date
+        description: ""
+      - name: prior_year_week_start_date
+        data_type: date
+        description: ""
+      - name: prior_year_week_end_date
+        data_type: date
+        description: ""
+      - name: week_of_year
+        data_type: number
+        description: ""
+      - name: iso_week_start_date
+        data_type: date
+        description: ""
+      - name: iso_week_end_date
+        data_type: date
+        description: ""
+      - name: prior_year_iso_week_start_date
+        data_type: date
+        description: ""
+      - name: prior_year_iso_week_end_date
+        data_type: date
+        description: ""
+      - name: iso_week_of_year
+        data_type: number
+        description: ""
+      - name: prior_year_week_of_year
+        data_type: number
+        description: ""
+      - name: prior_year_iso_week_of_year
+        data_type: number
+        description: ""
+      - name: month_of_year
+        data_type: number
+        description: ""
+      - name: month_name
+        data_type: varchar
+        description: ""
+      - name: month_name_short
+        data_type: varchar
+        description: ""
+      - name: month_start_date
+        data_type: date
+        description: ""
+      - name: month_end_date
+        data_type: date
+        description: ""
+      - name: prior_year_month_start_date
+        data_type: date
+        description: ""
+      - name: prior_year_month_end_date
+        data_type: date
+        description: ""
+      - name: quarter_of_year
+        data_type: number
+        description: ""
+      - name: quarter_start_date
+        data_type: date
+        description: ""
+      - name: quarter_end_date
+        data_type: date
+        description: ""
+      - name: year_number
+        data_type: number
+        description: ""
+      - name: year_start_date
+        data_type: date
+        description: ""
+      - name: year_end_date
+        data_type: date
+        description: ""
+
+  - name: dim_users
+    description: "Customers and users"
+    columns:
+      - name: user_id
+        data_type: varchar
+        description: "Unique ID for each user"
+      - name: created_at_utc
+        data_type: timestamp_ntz
+        description: "Date of first enrollment"
+      - name: updated_at_utc
+        data_type: timestamp_ntz
+        description: "Last user modification date"
+      - name: address_id
+        data_type: varchar
+        description: "Current user address"
+      - name: last_name
+        data_type: varchar
+        description: "User last name"
+      - name: first_name
+        data_type: varchar
+        description: "User first name"
+      - name: phone_number
+        data_type: varchar
+        description: "User phone number"
+      - name: email
+        data_type: varchar
+        description: "User email, format verified but not tested"
+      - name: deleted
+        data_type: boolean
+        description: ""
+      - name: insert_date_utc
+        data_type: timestamp_ntz
+        description: ""
+
+  - name: fct_budget
+    description: ""
+    columns:
+      - name: _row
+        data_type: number
+        description: "Unique ID for any insert, incremental"
+      - name: product_id
+        data_type: varchar
+        description: "Unique ID from each product"
+        tests:
+          - relationships:
+              field: product_id
+              to: ref('dim_products')   
+      - name: quantity
+        data_type: number
+        description: "Stock available of such product in inventory"
+      - name: month
+        data_type: number
+        description: "Month new stock is added"
+      - name: insert_date_utc
+        data_type: timestamp_ntz
+        description: ""
+
+  - name: fct_events
+    description: "User clicks on webpage"
+    columns:
+      - name: event_id
+        data_type: varchar
+        description: "Unique ID for each event registered"
+      - name: page_url
+        data_type: varchar
+        description: "Web url"
+      - name: event_type
+        data_type: varchar
+        description: "Type of event"
+      - name: user_id
+        data_type: varchar
+        description: "Unique ID for each user"
+        tests:
+          - relationships:
+              field: user_id
+              to: ref('dim_users')
+      - name: product_id
+        data_type: varchar
+        description: "Unique ID for each product"
+      - name: session_id
+        data_type: varchar
+        description: "Unique ID for each session"
+      - name: created_at_utc
+        data_type: timestamp_ntz
+        description: ""
+      - name: order_id
+        data_type: varchar
+        description: "Unique id for each order"
+      - name: deleted
+        data_type: boolean
+        description: ""
+      - name: insert_date_utc
+        data_type: timestamp_ntz
+        description: ""
+
+  - name: fct_orders_detail
+    description: ""
+    columns:
+      - name: header_line_hash
+        data_type: varchar
+        description: "Unique hash created to overcome Header/line issues"
+      - name: order_id
+        data_type: varchar
+        description: "Unique ID for each order"
+      - name: user_id
+        data_type: varchar
+        description: "Unique ID for each user"
+        tests:
+          - relationships:
+              field: user_id
+              to: ref('dim_users') 
+      - name: order_date_utc
+        data_type: timestamp_ntz
+        description: "Date of order"
+      - name: product_id
+        data_type: varchar
+        description: "Unique ID for each product"
+        tests:
+          - relationships:
+              field: product_id
+              to: ref('dim_products') 
+      - name: promo_id
+        data_type: varchar
+        description: "Unique ID for each promo"
+        tests:
+          - relationships:
+              field: promo_id
+              to: ref('dim_promos') 
+      - name: this_product_quantity
+        data_type: number
+        description: "Self descriptive"
+      - name: different_products_in_order
+        data_type: number
+        description: "Self descriptive"
+      - name: order_total_before_shipping_usd
+        data_type: number
+        description: "Order amount before shipping costs or discounts"
+      - name: order_total_income_usd
+        data_type: number
+        description: "What the company makes from the sale"

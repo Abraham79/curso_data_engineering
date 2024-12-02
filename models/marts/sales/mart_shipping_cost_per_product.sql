@@ -1,6 +1,6 @@
 with cte_orders_detail as (
 
-    SELECT
+    select
 
         order_id,
         user_id,
@@ -11,45 +11,45 @@ with cte_orders_detail as (
         order_total_before_shipping_usd,
         different_products_in_order
         
-    FROM {{ ref('fct_orders_detail') }}
+    from {{ ref('fct_orders_detail') }}
 ),
 
 cte_products as (
 
-    SELECT 
+    select 
 
         product_id,
         product_price_usd
     
-    FROM {{ ref('dim_products') }}
+    from {{ ref('dim_products') }}
 
 ), 
 
 
 cte_shipping as (
 
-    SELECT 
+    select
+
         order_id,
         shipping_cost_usd,
         tracking_id
 
-    FROM {{ ref('dim_shipping') }}
+    from {{ ref('dim_shipping') }}
 
 ),
 
 cte_promos as (
 
-        SELECT 
-        *
+    select *
 
-    FROM {{ ref('dim_promos') }}
+    from {{ ref('dim_promos') }}
 
 ),
 
 
-renamed AS (
+renamed as (
     
-    SELECT 
+    select 
         
         o.order_id,
         o.user_id,
@@ -63,21 +63,21 @@ renamed AS (
         d.discount_usd as total_order_discount,
 
         p.product_price_usd/o.order_total_before_shipping_usd as shipping_ratio,
-        ROUND(discount_usd*shipping_ratio, 2) as distributed_product_discount_usd,
-        ROUND(discount_usd*shipping_ratio*o.this_product_quantity, 2) as single_product_discount_usd,
-        ROUND(total_per_product_usd-discount_usd*shipping_ratio, 2) as discounted_product_price_usd,
-        ROUND(s.shipping_cost_usd*shipping_ratio*o.this_product_quantity, 2) as distributed_shipping_cost,
-        ROUND(s.shipping_cost_usd*shipping_ratio,2) as single_product_distributed_shipping_cost
+        round(discount_usd*shipping_ratio, 2) as distributed_product_discount_usd,
+        round(discount_usd*shipping_ratio*o.this_product_quantity, 2) as single_product_discount_usd,
+        round(total_per_product_usd-discount_usd*shipping_ratio, 2) as discounted_product_price_usd,
+        round(s.shipping_cost_usd*shipping_ratio*o.this_product_quantity, 2) as distributed_shipping_cost,
+        round(s.shipping_cost_usd*shipping_ratio,2) as single_product_distributed_shipping_cost
 
         
-    FROM cte_orders_detail o 
-    LEFT JOIN cte_products p 
-    ON o.product_id = p.product_id
-    LEFT JOIN cte_shipping s
-    ON o.order_id = s.order_id
-    LEFT JOIN cte_promos d 
+    from cte_orders_detail o 
+    left join cte_products p 
+    on o.product_id = p.product_id
+    left join cte_shipping s
+    on o.order_id = s.order_id
+    left join cte_promos d 
     on o.promo_id = d.promo_id
-    ORDER BY o.order_id
+    order by o.order_id
 )
 
-SELECT * FROM renamed
+select * from renamed

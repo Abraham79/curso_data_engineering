@@ -5,6 +5,7 @@ with
     renamed as (
         
         select
+
             order_id,
             nullif(TRIM(shipping_service), '') as shipping_service,
             {{ dbt_utils.generate_surrogate_key(['shipping_service']) }} as shipping_service_id,
@@ -22,6 +23,7 @@ with
             status,
             _fivetran_deleted as deleted,
             {{ to_utc("_fivetran_synced") }} as insert_date_utc
+            
         from source 
 
     )

@@ -9,6 +9,7 @@ source as (
 renamed as (
 
     select
+    
         event_id,
         page_url,
         event_type,

@@ -2,14 +2,17 @@ with
 
 cte_orders_detail as (
 
-    select * from {{ ref('fct_orders_detail') }}
-
+    select * 
+    
+    from {{ ref('fct_orders_detail') }}
 
 ), 
 
 cte_promos as (
 
-    select * from {{ ref('dim_promos') }}
+    select * 
+    
+    from {{ ref('dim_promos') }}
 
 ),
 
@@ -32,6 +35,7 @@ cte_time as (
 renamed as (
 
     select distinct
+
         o.order_id,
         -- count(distinct o.order_id)over(partition by t.year_number) as num_orders_per_year,
         -- count(distinct o.order_id)over(partition by t.month_name) as num_orders_per_month,
@@ -50,10 +54,8 @@ renamed as (
     left join cte_promos p
     on o.promo_id = p.promo_id
     left join cte_time t
-    on CAST(o.order_date_utc as DATE) = t.date_day
+    on cast(o.order_date_utc as date) = t.date_day
         
-
-
 
 )
 

@@ -9,6 +9,7 @@ source as (
 renamed as (
 
     select
+    
         shipping_service_id,
         shipping_service
 

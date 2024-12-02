@@ -1,46 +1,49 @@
 with cte_order_items as (
 
-    SELECT
+    select
 
         order_id,
         product_id,
         quantity,
-        COUNT(product_id)OVER(PARTITION BY order_id) AS num_prod_order
+        count(product_id)over(partition by order_id) as num_prod_order
         
-    FROM {{ ref('stg_sql_server_dbo__order_items') }}
+    from {{ ref('stg_sql_server_dbo__order_items') }}
 ),
 
 cte_products as (
 
-    SELECT *
+    select *
     
-    FROM {{ ref('stg_sql_server_dbo__products') }}
+    from {{ ref('stg_sql_server_dbo__products') }}
 ), 
 
 cte_orders as (
 
-    SELECT * 
-    FROM {{ ref('stg_sql_server_dbo__orders') }}
+    select * 
+
+    from {{ ref('stg_sql_server_dbo__orders') }}
 
 ),
 
 cte_shipping as (
 
-    SELECT * 
-    FROM {{ ref('stg_sql_server_dbo__shipping') }}
+    select * 
+
+    from {{ ref('stg_sql_server_dbo__shipping') }}
 
 ),
 
 cte_promos as (
 
-    SELECT * FROM {{ ref('stg_sql_server_dbo__promos') }}
+    select * 
+    
+    from {{ ref('stg_sql_server_dbo__promos') }}
 
 ),
 
 renamed AS (
     
-    SELECT 
-        
+    select 
         
         {{ dbt_utils.generate_surrogate_key(['o.order_id', 'o.order_date_utc', 'o.order_cost_usd']) }} as header_line_hash,
         o.order_id,
@@ -50,7 +53,7 @@ renamed AS (
         o.promo_id,
         -- o.tracking_id,
         -- p.product_price_usd,
-        oi.quantity AS this_product_quantity,
+        oi.quantity as this_product_quantity,
         oi.num_prod_order as different_products_in_order,
         -- s.shipping_cost_usd as order_shipping_cost_usd,
         -- SUM(total_per_product)OVER(PARTITION BY o.order_id) as total_order,
@@ -64,16 +67,16 @@ renamed AS (
         -- ROUND(shipping_cost_usd*shipping_ratio,2) as single_product_distributed_shipping_cost
 
         
-    FROM cte_orders o 
-    LEFT JOIN cte_order_items oi
-    ON o.order_id = oi.order_id
-    LEFT JOIN cte_promos d
+    from cte_orders o 
+    left join cte_order_items oi
+    on o.order_id = oi.order_id
+    left join cte_promos d
     on o.promo_id = d.promo_id
-    LEFT JOIN cte_products p 
-    ON oi.product_id = p.product_id
-    LEFT JOIN cte_shipping s
-    ON o.order_id = s.order_id
-    ORDER BY o.order_id
+    left join cte_products p 
+    on oi.product_id = p.product_id
+    left join cte_shipping s
+    on o.order_id = s.order_id
+    order by o.order_id
 )
 
 SELECT * FROM renamed

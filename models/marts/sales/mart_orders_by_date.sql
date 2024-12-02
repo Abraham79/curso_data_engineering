@@ -1,6 +1,8 @@
 with cte_orders_detail as (
 
-    select * from {{ ref('fct_orders_detail') }}
+    select * 
+    
+    from {{ ref('fct_orders_detail') }}
 
 
 ), 
@@ -38,7 +40,7 @@ renamed as (
         
     from cte_orders_detail o
     left join cte_time t
-    on CAST(o.order_date_utc as DATE) = t.date_day
+    on cast(o.order_date_utc as date) = t.date_day
         
 
 

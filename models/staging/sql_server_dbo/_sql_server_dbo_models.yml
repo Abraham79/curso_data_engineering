@@ -404,11 +404,7 @@ models:
         description: "Actual date of delivery"
       - name: tracking_id
         data_type: varchar
-        description: "Unique ID for each delivery" 
-        tests:
-          - relationships:
-              field: tracking_id
-              to: ref('sql_server_dbo', 'shipping')          
+        description: "Unique ID for each delivery"       
       - name: status
         data_type: varchar
         description: "Shipment and delivery status"

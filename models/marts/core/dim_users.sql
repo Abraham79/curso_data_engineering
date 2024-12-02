@@ -9,6 +9,7 @@ source as (
 renamed as (
 
     select
+    
         user_id,
         created_at_utc,
         updated_at_utc,

@@ -9,6 +9,7 @@ source as (
 renamed as (
 
     select
+    
         product_id,
         product_name,
         product_price_usd,

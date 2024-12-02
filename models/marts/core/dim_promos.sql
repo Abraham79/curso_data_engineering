@@ -8,6 +8,7 @@ source as (
 renamed as (
 
     select
+    
         promo_name,
         promo_id,
         discount_usd,

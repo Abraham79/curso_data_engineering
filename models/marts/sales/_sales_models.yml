@@ -1,0 +1,190 @@
+version: 2
+
+
+models:
+  - name: mart_order_math
+    description: "Sales and orders related calculations"
+    columns:
+      - name: header_line_hash
+        data_type: varchar
+        description: "Needed for Header/line issues"
+      - name: order_id
+        data_type: varchar
+        description: "Unique ID for each order"
+        tests:
+          - relationships:
+              field: order_id
+              to: ref('fct_orders_detail')
+      - name: user_id
+        data_type: varchar
+        description: "Unique ID for each user"
+        tests:
+          - relationships:
+              field: user_id
+              to: ref('dim_users')
+      - name: promo_id
+        data_type: varchar
+        description: "Unique ID for each promotion"
+        tests:
+          - relationships:
+              field: promo_id
+              to: ref('dim_promos')
+      - name: promo_name
+        data_type: varchar
+        description: "Self descriptive"
+      - name: discount_usd
+        data_type: number
+        description: "Promo discount in USD"
+      - name: order_total_before_shipping_usd
+        data_type: number
+        description: "Order total before shipping costs or discounts"
+      - name: order_total_income_usd
+        data_type: number
+        description: "Order total after discounts"
+      - name: total_per_product_usd
+        data_type: number
+        description: "Amount spent on each product"
+
+  - name: mart_orders_by_date
+    description: "Order related calculations"
+    columns:
+      - name: order_id
+        data_type: varchar
+        description: "Unique ID for each order"
+        tests:
+          - relationships:
+              field: order_id
+              to: ref('fct_orders_detail')
+      - name: order_date_utc
+        data_type: timestamp_ntz
+        description: "Date of order"
+      - name: order_total_income_usd
+        data_type: number
+        description: "Total earnings from order"
+      - name: day_of_week_iso
+        data_type: number
+        description: "Number of day of week starting on Mondays"
+      - name: day_of_week_name
+        data_type: varchar
+        description: "Self descriptive"
+      - name: month_name
+        data_type: varchar
+        description: "Self descriptive"
+      - name: quarter_of_year
+        data_type: number
+        description: "Self descriptive"
+      - name: year_number
+        data_type: number
+        description: "Self descriptive"
+
+  - name: mart_shipping_cost_per_order
+    description: "Order related shipping costs"
+    columns:
+      - name: order_id
+        data_type: varchar
+        description: "Unique ID for each order"
+        tests:
+          - relationships:
+              field: order_id
+              to: ref('fct_orders_detail')
+      - name: user_id
+        data_type: varchar
+        description: "Unique ID for each user"
+        tests:
+          - relationships:
+              field: user_id
+              to: ref('dim_users')
+      - name: order_date_utc
+        data_type: timestamp_ntz
+        description: "Self descriptive"
+      - name: promo_id
+        data_type: varchar
+        description: "Unique ID for each promotion"
+        tests:
+          - relationships:
+              field: promo_id
+              to: ref('dim_promos')
+      - name: tracking_id
+        data_type: varchar
+        description: "Self descriptive"
+        tests:
+          - relationships:
+              field: tracking_id
+              to: ref('dim_shipping')
+      - name: order_shipping_cost_usd
+        data_type: number
+        description: "Shipping costs by order"
+      - name: order_total_before_shipping_usd
+        data_type: number
+        description: "Order price before shipping costs or discounts"
+      - name: order_total_plus_shipping_usd
+        data_type: number
+        description: "Order price after shipping costs in USD"
+
+  - name: mart_shipping_cost_per_product
+    description: "Product distributed shipping costs"
+    columns:
+      - name: order_id
+        data_type: varchar
+        description: "Unique ID for each order"
+        tests:
+          - relationships:
+              field: order_id
+              to: ref('fct_orders_detail')
+      - name: user_id
+        data_type: varchar
+        description: "Unique ID for each user"
+        tests:
+          - relationships:
+              field: user_id
+              to: ref('dim_users')
+      - name: order_date_utc
+        data_type: timestamp_ntz
+        description: "Date of order"
+      - name: product_id
+        data_type: varchar
+        description: "Unique ID for each product"
+        tests:
+          - relationships:
+              field: product_id
+              to: ref('dim_products')
+      - name: promo_id
+        data_type: varchar
+        description: "Unique ID for each promotion"
+        tests:
+          - relationships:
+              field: promo_id
+              to: ref('dim_promos')
+      - name: tracking_id
+        data_type: varchar
+        description: "Self descriptive"
+      - name: product_price_usd
+        data_type: number
+        description: "Price of this product"
+      - name: this_product_quantity
+        data_type: number
+        description: "Quantity of this product"
+      - name: total_per_product_usd
+        data_type: number
+        description: "Total price for this product"
+      - name: total_order_discount
+        data_type: number
+        description: "Total discount for this order"
+      - name: shipping_ratio
+        data_type: number
+        description: "Needed calculation for distributing shipping costs and discounts"
+      - name: distributed_product_discount_usd
+        data_type: number
+        description: "Distributed discount for each product total in order"
+      - name: single_product_discount_usd
+        data_type: number
+        description: "Distributed discount for each single product"
+      - name: discounted_product_price_usd
+        data_type: number
+        description: "Price of product after discount"
+      - name: distributed_shipping_cost
+        data_type: number
+        description: "Distributed shipping costs for each product total"
+      - name: single_product_distributed_shipping_cost
+        data_type: number
+        description: "Distributed shipping costs for each single product in this order"
