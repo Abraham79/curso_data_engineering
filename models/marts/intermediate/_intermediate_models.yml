@@ -1,0 +1,101 @@
+version: 2
+
+models:
+  - name: int_fct_users_activity
+    description: "User related calculations and extended information"
+    columns:
+      - name: user_id
+        data_type: varchar
+        description: "Self descriptive"
+        tests:
+          - relationships:
+              field: user_id
+              to: ref('dim_users')
+      - name: created_at_utc
+        data_type: timestamp_ntz
+        description: "Date of user sign up"
+      - name: updated_at_utc
+        data_type: timestamp_ntz
+        description: "Date of last update"
+      - name: address_id
+        data_type: varchar
+        description: "Unique ID for each address"
+        tests:
+          - relationships:
+              field: address_id
+              to: ref('dim_addresses')
+      - name: last_name
+        data_type: varchar
+        description: "Self descriptive"
+      - name: first_name
+        data_type: varchar
+        description: "Self descriptive"
+      - name: phone_number
+        data_type: varchar
+        description: "Self descriptive"
+      - name: email
+        data_type: varchar
+        description: "Self descriptive"
+      - name: user_orders_count
+        data_type: number
+        description: "Number of orders from this user"
+      - name: user_total_income_usd
+        data_type: number
+        description: "Total earnings from this user"
+      - name: user_avg_income_usd
+        data_type: number
+        description: "Average spent by this user in each order"
+      - name: user_total_discounts_usd
+        data_type: number
+        description: "Amount of all discounts applied for this user"
+      - name: deleted
+        data_type: boolean
+        description: ""
+      - name: insert_date_utc
+        data_type: timestamp_ntz
+        description: ""
+
+  - name: int_total_sales_discounts
+    description: "Sales and discounts related calculations"
+    columns:
+      - name: total_orders_count
+        data_type: number
+        description: "Total number of orders"
+      - name: order_total_usd
+        data_type: number
+        description: "Total amount from orders before discounts"
+      - name: order_total_income_usd
+        data_type: number
+        description: "Total amount from orders after discounts"
+      - name: total_discount_usd
+        data_type: number
+        description: "Total amount of discounts"
+      - name: total_promos_count
+        data_type: number
+        description: "Total number of promos redeemed"
+
+  - name: int_users_totals
+    description: "User related calculations"
+    columns:
+      - name: user_id
+        data_type: varchar
+        description: "Self descriptive"
+        tests:
+          - relationships:
+              field: user_id
+              to: ref('dim_users')
+      - name: user_orders_count
+        data_type: number
+        description: "Number of orders from this user"
+      - name: user_order_total_usd
+        data_type: number
+        description: "Total amount spent by this user"
+      - name: user_order_total_income_usd
+        data_type: number
+        description: "Total amount earned from this user after discounts"
+      - name: user_total_discount_usd
+        data_type: number
+        description: "Total amount of discounts redeemed by this customer"
+      - name: user_total_promos_count
+        data_type: number
+        description: "Number of discounts redeemed by this customer"

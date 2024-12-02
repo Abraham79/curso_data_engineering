@@ -1,0 +1,168 @@
+version: 2
+
+
+models:
+  - name: mart_events_by_date
+    description: "Website events by date"
+    columns:
+      - name: event_id
+        data_type: varchar
+        description: "Unique ID for each event"
+      - name: page_url
+        data_type: varchar
+        description: "Self descriptive"
+      - name: event_type
+        data_type: varchar
+        description: "Actions performed by user on que website"
+      - name: user_id
+        data_type: varchar
+        description: "Unique ID for each user"
+        tests:
+          - relationships:
+              field: user_id
+              to: ref('dim_users')
+      - name: product_id
+        data_type: varchar
+        description: "Unique ID for each product"
+        tests:
+          - relationships:
+              field: product_id
+              to: ref('dim_products')
+      - name: session_id
+        data_type: varchar
+        description: "Unique ID for each session"
+      - name: created_at_utc
+        data_type: timestamp_ntz
+        description: "Date of event"
+      - name: order_id
+        data_type: varchar
+        description: "Unique ID for each order"       
+        tests:
+          - relationships:
+              field: order_id
+              to: ref('fct_orders_detail')
+      - name: deleted
+        data_type: boolean
+        description: ""
+      - name: insert_date_utc
+        data_type: timestamp_ntz
+        description: ""
+      - name: day_of_week_iso
+        data_type: number
+        description: ""
+      - name: day_of_week_name
+        data_type: varchar
+        description: ""
+      - name: month_name
+        data_type: varchar
+        description: ""
+      - name: quarter_of_year
+        data_type: number
+        description: ""
+      - name: year_number
+        data_type: number
+        description: ""
+
+  - name: mart_promos_by_date
+    description: "Promos by date"
+    columns:
+      - name: order_id
+        data_type: varchar
+        description: "Unique ID for each order"
+        tests:
+          - relationships:
+              field: order_id
+              to: ref('fct_orders_detail')
+      - name: order_date_utc
+        data_type: timestamp_ntz
+        description: "Date of order"
+      - name: order_total_before_shipping_usd
+        data_type: number
+        description: "Order total before shipping costs and discounts"
+      - name: discount_usd
+        data_type: number
+        description: "Amount of discount in USD"
+      - name: order_total_income_usd
+        data_type: number
+        description: "Earnings from this order"
+      - name: day_of_week_iso
+        data_type: number
+        description: ""
+      - name: day_of_week_name
+        data_type: varchar
+        description: ""
+      - name: month_name
+        data_type: varchar
+        description: ""
+      - name: quarter_of_year
+        data_type: number
+        description: ""
+      - name: year_number
+        data_type: number
+        description: ""
+
+  - name: mart_users_activity
+    description: "Activity from users"
+    columns:
+      - name: user_id
+        data_type: varchar
+        description: "Unique ID for each user"
+        tests:
+          - relationships:
+              field: user_id
+              to: ref('dim_users')
+      - name: created_at_utc
+        data_type: timestamp_ntz
+        description: "Date of user sign up"
+      - name: updated_at_utc
+        data_type: timestamp_ntz
+        description: "Last date user changed his profile"
+      - name: address_id
+        data_type: varchar
+        description: "Unique ID for each user"
+        tests:
+          - relationships:
+              field: address_id
+              to: ref('dim_addresses')
+      - name: last_name
+        data_type: varchar
+        description: ""
+      - name: first_name
+        data_type: varchar
+        description: ""
+      - name: phone_number
+        data_type: varchar
+        description: ""
+      - name: email
+        data_type: varchar
+        description: ""
+      - name: user_orders_count
+        data_type: number
+        description: "Number of orders from this user"
+      - name: user_products_count
+        data_type: number
+        description: "Number of products purchased by this customer"
+      - name: user_total_income_usd
+        data_type: number
+        description: "Total earnings from this customer"
+      - name: user_avg_order_income_usd
+        data_type: number
+        description: "Average earnings from this customer orders"
+      - name: user_avg_product_income_usd
+        data_type: number
+        description: "Average price of products this customer purchases"
+      - name: user_score
+        data_type: number
+        description: "Customer score calculated from total sales"
+      - name: user_total_promos_count
+        data_type: number
+        description: "Number of promos redeemed by this user"
+      - name: user_total_discount_usd
+        data_type: number
+        description: "Total amount of discounts redeemed by this user"
+      - name: deleted
+        data_type: boolean
+        description: ""
+      - name: insert_date_utc
+        data_type: timestamp_ntz
+        description: ""

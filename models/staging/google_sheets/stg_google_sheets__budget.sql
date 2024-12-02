@@ -12,7 +12,7 @@ renamed as (
         _row,
         product_id,
         quantity,
-        {{ to_utc("month") }} as month_utc,
+        month({{ to_utc("month") }}) as month,
         {{ to_utc("_fivetran_synced") }} as insert_date_utc
 
     from source
