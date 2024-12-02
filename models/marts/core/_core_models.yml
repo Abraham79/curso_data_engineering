@@ -79,7 +79,7 @@ models:
         tests:
           - relationships:
               field: order_id
-              to: ref('dim_orders_detail')
+              to: ref('fct_orders_detail')
       - name: shipping_cost_usd
         data_type: number
         description: "Shipping cost in USD"
