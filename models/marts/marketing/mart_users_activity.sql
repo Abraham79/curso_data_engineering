@@ -18,6 +18,12 @@ cte_promos as (
 
 ),
 
+cte_int_users_totals as (
+
+    select * from {{ ref('int_users_totals') }}
+
+),
+
 renamed as (
 
     select distinct
@@ -30,11 +36,14 @@ renamed as (
         u.first_name,
         u.phone_number,
         u.email,
-        count(o.order_id)over(PARTITION BY u.user_id) as user_orders_count,
-        sum(o.order_total_income_usd)over(PARTITION BY u.user_id) as user_total_income_usd,
-        round(avg(o.order_total_income_usd)over(PARTITION BY u.user_id),2) as user_avg_income_usd,
-        user_total_income_usd/(select sum(order_total_income_usd) from {{  ref('fct_orders_detail') }}) as percent_from_total_sales,
-        sum(p.discount_usd)over(PARTITION BY u.user_id) as user_total_discounts_usd,
+        ut.user_orders_count,
+        count(o.order_id)over(PARTITION BY u.user_id) as user_products_count,
+        ut.user_order_total_income_usd as user_total_income_usd,
+        round(user_total_income_usd/user_orders_count,2) as user_avg_order_income_usd,
+        round(user_total_income_usd/user_products_count,2) as user_avg_product_income_usd,
+        user_total_income_usd/(select order_total_income_usd from {{ ref('int_total_sales_discounts') }}) as user_score,
+        ut.user_total_promos_count,
+        ut.user_total_discount_usd,
         u.deleted as deleted,
         u.insert_date_utc
 
@@ -43,6 +52,8 @@ renamed as (
     on u.user_id = o.user_id
     LEFT JOIN cte_promos p
     on o.promo_id = p.promo_id
+    LEFT JOIN cte_int_users_totals ut 
+    on o.user_id = ut.user_id
     
 
 )

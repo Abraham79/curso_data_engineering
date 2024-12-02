@@ -59,6 +59,8 @@ models:
     marts:
           +materialized: table
           +database: "{{ env_var('DBT_ENVIRONMENTS') }}_GOLD_DB"
+          intermediate:
+            +schema: intermediate
           core:
             +schema: core
           sales:

@@ -30,6 +30,7 @@ renamed as (
 
     select
 
+        {{ dbt_utils.generate_surrogate_key(['o.order_id', 'o.order_date_utc', 'o.order_total_income_usd']) }} as header_line_hash,
         o.order_id,
         o.user_id,
         o.promo_id,

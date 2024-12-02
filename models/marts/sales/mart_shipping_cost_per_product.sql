@@ -9,7 +9,6 @@ with cte_orders_detail as (
         order_date_utc,
         promo_id,
         order_total_before_shipping_usd,
-        tracking_id,
         different_products_in_order
         
     FROM {{ ref('fct_orders_detail') }}
@@ -31,7 +30,8 @@ cte_shipping as (
 
     SELECT 
         order_id,
-        shipping_cost_usd
+        shipping_cost_usd,
+        tracking_id
 
     FROM {{ ref('dim_shipping') }}
 
@@ -56,7 +56,7 @@ renamed AS (
         o.order_date_utc,
         p.product_id,
         o.promo_id,
-        o.tracking_id,
+        s.tracking_id,
         p.product_price_usd,
         o.this_product_quantity,
         p.product_price_usd*o.this_product_quantity as total_per_product_usd,

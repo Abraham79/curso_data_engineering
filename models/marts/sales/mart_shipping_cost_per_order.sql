@@ -9,7 +9,6 @@ with cte_orders_detail as (
         order_date_utc,
         order_total_before_shipping_usd,
         promo_id,
-        tracking_id,
         COUNT(product_id)OVER(PARTITION BY order_id) AS num_prod_order
         
     FROM {{ ref('fct_orders_detail') }}
@@ -34,7 +33,7 @@ renamed AS (
         o.order_date_utc,
 
         o.promo_id,
-        o.tracking_id,
+        s.tracking_id,
 
 
         s.shipping_cost_usd as order_shipping_cost_usd,
