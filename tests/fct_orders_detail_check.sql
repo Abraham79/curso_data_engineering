@@ -2,6 +2,7 @@ with cte_fct_order_details as (
 
     select 
 
+        md5('sk') as sk,
         count(order_id) as check_total_orders
 
     from (  select distinct 
@@ -9,15 +10,20 @@ with cte_fct_order_details as (
             order_id 
             from {{ ref('fct_orders_detail') }}
     )
+
+    group by sk
+
 ),
 
 cte_base_orders as (
 
     select 
 
+        md5('sk') as sk,
         count(order_id) as check_total_orders
         
     from {{ ref('base_sql_server_dbo__orders') }}
+    group by sk
 
 ),
 
@@ -30,7 +36,7 @@ renamed as (
     
     from cte_fct_order_details gold
     left join cte_base_orders base
-    on gold.check_total_orders = base.check_total_orders
+    on gold.sk = base.sk
     where gold.check_total_orders <> base.check_total_orders
 
 )
