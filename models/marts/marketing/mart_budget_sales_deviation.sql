@@ -7,6 +7,7 @@ with cte_budget as (
         sum(quantity) as expected_sales
 
     from {{ ref('fct_budget') }} 
+   
     group by 1,2
    
 ),
@@ -24,18 +25,28 @@ cte_sales as (
     group by 1,2
 ),
 
+cte_products as (  
+
+    select * from {{ ref('dim_products') }} 
+
+)
+
+,
+
 renamed as (
 
     select
 
         b.month,
         b.product_id, 
+        p.product_name,
         expected_sales,
         actual_sales,
         actual_sales-expected_sales AS deviation_from_budget
 
     from cte_budget b 
     left join cte_sales s on b.product_id = s.product_id and b.month = s.month
+    left join cte_products as p
 )
 
 select * from renamed order by 1 asc 
