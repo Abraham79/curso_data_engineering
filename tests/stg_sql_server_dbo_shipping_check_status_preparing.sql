@@ -1,5 +1,7 @@
-SELECT *
-FROM ALUMNO1_DEV_SILVER_DB.ALUMNO1.STG_SQL_SERVER_DBO__SHIPPING
-WHERE status = 'preparing' and delivery_date_utc is not null
+select *
 
-/* Products with status such as 'preparing' can not have delivery date */
+from ALUMNO1_DEV_SILVER_DB.ALUMNO1.STG_SQL_SERVER_DBO__SHIPPING
+
+where status = 'preparing' and delivery_date_utc is not null
+
+/* Products with status such as 'preparing' can not have a delivery date */

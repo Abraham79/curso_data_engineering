@@ -1,6 +1,8 @@
-SELECT *
-FROM {{ ref('stg_sql_server_dbo__users') }}
-WHERE email not like  '%@%.%' 
+select *
+
+from {{ ref('stg_sql_server_dbo__users') }}
+
+where email not like  '%@%.%' 
 
 /* Checks mail from users for a valid format */
 
