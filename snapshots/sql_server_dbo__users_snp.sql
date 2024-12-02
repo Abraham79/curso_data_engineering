@@ -1,5 +1,4 @@
-{% snapshot users_check_snp%}
-
+{% snapshot sql_server_dbo__users_snp%}
 {{
     config(
         target_schema='snapshots',
