@@ -24,6 +24,10 @@ models:
       - name: product_id
         data_type: varchar
         description: "Unique ID for each product"
+        tests:
+          - relationships:
+              field: product_id
+              to: ref('dim_products')
       - name: session_id
         data_type: varchar
         description: "Unique ID for each session"
@@ -32,7 +36,11 @@ models:
         description: "Date of event"
       - name: order_id
         data_type: varchar
-        description: "Unique ID for each order"
+        description: "Unique ID for each order"       
+        tests:
+          - relationships:
+              field: order_id
+              to: ref('fct_orders_detail')
       - name: deleted
         data_type: boolean
         description: ""
