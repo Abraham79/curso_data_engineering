@@ -46,7 +46,7 @@ renamed as (
 
     from cte_budget b 
     left join cte_sales s on b.product_id = s.product_id and b.month = s.month
-    left join cte_products as p
+    left join cte_products as p on b.product_id = p.product_id
 )
 
 select * from renamed order by 1 asc 
