@@ -1,3 +1,10 @@
+{{ config(
+    materialized='incremental',
+    unique_key = 'user_id'
+    ) 
+    }}
+
+
 with 
 
 source as (
@@ -19,10 +26,17 @@ renamed as (
         phone_number,
         email,
         deleted,
-        insert_date_utc
+        insert_date_utc, 
+        _fivetran_synced
 
     from source
 
 )
 
 select * from renamed
+
+{% if is_incremental() %}
+
+  where _fivetran_synced > (select max(_fivetran_synced) from {{ this }})
+
+{% endif %}

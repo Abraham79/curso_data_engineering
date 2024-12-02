@@ -1,3 +1,10 @@
+{{ config(
+    materialized='incremental',
+    unique_key = 'user_id'
+    ) 
+    }}
+
+
 with 
 
 cte_users as (
@@ -19,7 +26,8 @@ renamed as (
         phone_number,
         email, 
         _fivetran_deleted as deleted,
-        {{ to_utc("_fivetran_synced") }} as insert_date_utc
+        {{ to_utc("_fivetran_synced") }} as insert_date_utc,
+        _fivetran_synced
 
     from cte_users 
 
@@ -27,3 +35,9 @@ renamed as (
 )
 
 select * from renamed
+
+{% if is_incremental() %}
+
+  where _fivetran_synced > (select max(_fivetran_synced) from {{ this }})
+
+{% endif %}
