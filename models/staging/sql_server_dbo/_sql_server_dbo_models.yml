@@ -180,7 +180,7 @@ models:
         tests:
           - relationships:
               field: product_id
-              to: ref('sql_server_dbo', 'products')   
+              to: ref('stg_sql_server_dbo__products')   
       - name: quantity
         data_type: number
         description: "Stock available of such product in inventory"
@@ -248,14 +248,14 @@ models:
         tests:
           - relationships:
               field: user_id
-              to: ref('sql_server_dbo', 'users')   
+              to: ref('stg_sql_server_dbo__users')   
       - name: product_id
         data_type: varchar
         description: "Unique ID for each product"
         tests:
           - relationships:
               field: product_id
-              to: ref('sql_server_dbo', 'products')   
+              to: ref('stg_sql_server_dbo__products')   
       - name: session_id
         data_type: varchar
         description: "Unique ID for each session"
@@ -268,7 +268,7 @@ models:
         tests:
           - relationships:
               field: order_id
-              to: ref('sql_server_dbo', 'orders')   
+              to: ref('stg_sql_server_dbo__orders')   
       - name: deleted
         data_type: boolean
         description: ""
@@ -285,14 +285,14 @@ models:
         tests:
           - relationships:
               field: order_id
-              to: ref('sql_server_dbo', 'orders')   
+              to: ref('stg_sql_server_dbo__orders')   
       - name: product_id
         data_type: varchar
         description: "Unique ID for each product"
         tests:
           - relationships:
               field: product_id
-              to: ref('sql_server_dbo', 'products')   
+              to: ref('stg_sql_server_dbo__products')   
       - name: quantity
         data_type: number
         description: "Quantity of each product in current order"
@@ -318,7 +318,7 @@ models:
         tests:
           - relationships:
               field: promo_id
-              to: ref('sql_server_dbo', 'promos')
+              to: ref('stg_sql_server_dbo__promos')
       - name: order_cost_usd
         data_type: number
         description: ""
@@ -328,7 +328,7 @@ models:
         tests:
           - relationships:
               field: user_id
-              to: ref('sql_server_dbo', 'users')
+              to: ref('stg_sql_server_dbo__users')
       - name: deleted
         data_type: boolean
         description: ""
@@ -389,7 +389,7 @@ models:
         tests:
           - relationships:
               field: order_id
-              to: ref('sql_server_dbo', 'orders')
+              to: ref('stg_sql_server_dbo__orders')
       - name: shipping_cost_usd
         data_type: number
         description: "Shipping cost in USD"
