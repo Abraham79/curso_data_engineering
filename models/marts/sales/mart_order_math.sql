@@ -42,7 +42,7 @@ renamed as (
         o.order_id,
         o.user_id,
         o.promo_id,
-        d.promo_name,
+        nullif(d.promo_name, 'no_promo'),
         d.discount_usd,
         s.shipping_cost_usd,
         o.order_total_before_shipping_usd,

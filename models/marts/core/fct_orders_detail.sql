@@ -10,12 +10,12 @@ with cte_order_items as (
     from {{ ref('stg_sql_server_dbo__order_items') }}
 ),
 
-cte_products as (
+/*cte_products as (
 
     select *
     
     from {{ ref('stg_sql_server_dbo__products') }}
-), 
+), */
 
 cte_orders as (
 
@@ -50,7 +50,9 @@ renamed AS (
         o.user_id,
         o.order_date_utc,
         oi.product_id,
+        -- p.product_name,
         o.promo_id,
+        -- nullif(d.promo_name, 'no_promo') as promo_name,
         oi.quantity as this_product_quantity,
         oi.num_prod_order as different_products_in_order,
         o.order_cost_usd as order_total_before_shipping_usd,
@@ -65,8 +67,8 @@ renamed AS (
     on o.order_id = oi.order_id
     left join cte_promos d
     on o.promo_id = d.promo_id
-    left join cte_products p 
-    on oi.product_id = p.product_id
+    -- left join cte_products p 
+    -- on oi.product_id = p.product_id
     left join cte_shipping s
     on o.order_id = s.order_id
     order by o.order_id

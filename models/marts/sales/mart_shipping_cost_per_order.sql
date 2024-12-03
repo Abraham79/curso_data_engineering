@@ -23,6 +23,14 @@ cte_shipping as (
 
 ),
 
+cte_promos as (
+
+    select *
+
+    from {{ ref('dim_promos') }}
+
+),
+
 renamed as (
     
     select distinct
@@ -34,7 +42,8 @@ renamed as (
         s.tracking_id,
         s.shipping_cost_usd as order_shipping_cost_usd,
         order_total_before_shipping_usd,
-        order_total_before_shipping_usd+order_shipping_cost_usd as order_total_plus_shipping_usd,
+        d.discount_usd as order_discount_usd,
+        order_total_before_shipping_usd+order_shipping_cost_usd-order_discount_usd as order_total_plus_shipping_usd,
         --product_price_usd/order_total_before_shipping_usd as shipping_ratio,
         --ROUND(shipping_cost_usd*shipping_ratio*o.this_product_quantity, 2) as distributed_shipping_cost,
         --ROUND(shipping_cost_usd*shipping_ratio,2) as single_product_distributed_shipping_cost
@@ -43,6 +52,8 @@ renamed as (
     from cte_orders_detail o 
     left join cte_shipping s
     on o.order_id = s.order_id
+    left join cte_promos d 
+    on o.promo_id = d.promo_id
     order by o.order_id
 )
 
