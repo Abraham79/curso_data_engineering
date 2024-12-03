@@ -54,7 +54,10 @@ renamed AS (
         oi.quantity as this_product_quantity,
         oi.num_prod_order as different_products_in_order,
         o.order_cost_usd as order_total_before_shipping_usd,
+        d.discount_usd as order_discount_usd,
         order_total_before_shipping_usd-d.discount_usd as order_total_income_usd,
+        s.shipping_cost_usd as order_shipping_cost_usd,
+        order_total_income_usd+s.shipping_cost_usd as order_total_plus_shipping
 
         
     from cte_orders o 
