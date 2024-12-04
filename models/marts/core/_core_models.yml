@@ -265,7 +265,7 @@ models:
         description: ""
 
   - name: fct_budget
-    description: ""
+    description: "Expected vs. actual sales"
     columns:
       - name: _row
         data_type: number
@@ -326,7 +326,7 @@ models:
         description: ""
 
   - name: fct_orders_detail
-    description: ""
+    description: "Fact table for orders and products"
     columns:
       - name: header_line_hash
         data_type: varchar
