@@ -7,6 +7,9 @@ models:
       - name: order_id          
         data_type: varchar
         description: "Unique ID for each order"
+        tests:
+          - not_null
+          - unique 
       - name: shipping_service
         data_type: varchar
         description: "Shipping company of choice"
