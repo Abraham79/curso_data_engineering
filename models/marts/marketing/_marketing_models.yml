@@ -132,7 +132,7 @@ models:
         description: ""
 
   - name: mart_users_activity
-    description: "Activity from users"
+    description: "Activity from users, required for calculating user score"
     columns:
       - name: user_id
         data_type: varchar

@@ -27,10 +27,9 @@ cte_products as (
 select 
     
     o.* ,
-    
-        p.product_price_usd/o.order_total_before_shipping_usd as shipping_ratio,
-        d.discount_usd*shipping_ratio as single_product_distributed_discount_usd,
-        d.discount_usd*shipping_ratio*o.this_product_quantity as distributed_product_discount_usd,
+    p.product_price_usd/o.order_total_before_shipping_usd as shipping_ratio,
+    d.discount_usd*shipping_ratio as single_product_distributed_discount_usd,
+    d.discount_usd*shipping_ratio*o.this_product_quantity as distributed_product_discount_usd,
     p.product_name,
     nullif(d.promo_name, 'no_promo') as promo_name
     
