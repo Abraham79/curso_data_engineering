@@ -23,6 +23,8 @@ cte_time as (
 ),
 
 
+
+
 renamed as (
 
     select distinct
@@ -32,6 +34,7 @@ renamed as (
         o.order_date_utc,
         -- o.product_id,
         o.order_total_income_usd,
+        nullif(o.promo_id, 'fa2cb83ccf3c62c316ce453bb4ea4ced') as promo_id,
         t.day_of_week_iso,
         t.day_of_week_name,
         t.month_name,
