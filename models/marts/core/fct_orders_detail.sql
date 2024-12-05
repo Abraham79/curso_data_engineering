@@ -1,21 +1,24 @@
-with cte_order_items as (
+{{ config(
+    materialized='incremental',
+    unique_key = 'unique_hash'
+    ) 
+    }}
+
+with 
+
+cte_order_items as (
 
     select
 
         order_id,
         product_id,
         quantity,
-        count(product_id)over(partition by order_id) as num_prod_order
+        count(product_id)over(partition by order_id) as num_prod_order,
+        _fivetran_synced
         
     from {{ ref('stg_sql_server_dbo__order_items') }}
 ),
 
-cte_products as (
-
-    select *
-    
-    from {{ ref('stg_sql_server_dbo__products') }}
-), 
 
 cte_orders as (
 
@@ -45,26 +48,25 @@ renamed AS (
     
     select 
         
-        {{ dbt_utils.generate_surrogate_key(['o.order_id', 'o.order_date_utc', 'o.order_cost_usd']) }} as header_line_hash,
+        {{ dbt_utils.generate_surrogate_key(['o.order_id', 'o.order_date_utc']) }} as header_line_hash,
+        {{ dbt_utils.generate_surrogate_key(['o.order_id', 'product_id']) }} as unique_hash,      
         o.order_id,
         o.user_id,
+        o.address_id,
         o.order_date_utc,
         oi.product_id,
         o.promo_id,
-        -- o.tracking_id,
-        -- p.product_price_usd,
         oi.quantity as this_product_quantity,
         oi.num_prod_order as different_products_in_order,
-        -- s.shipping_cost_usd as order_shipping_cost_usd,
-        -- SUM(total_per_product)OVER(PARTITION BY o.order_id) as total_order,
-        /*{{ single_row('SUM(total_per_product_usd)OVER(PARTITION BY o.order_id)', 'order_total_before_shipping_usd', 'oi.order_id' ) }}*/
         o.order_cost_usd as order_total_before_shipping_usd,
-        -- d.discount_usd,
+        d.discount_usd as order_discount_usd,
         order_total_before_shipping_usd-d.discount_usd as order_total_income_usd,
-        -- order_total_income_usd+order_shipping_cost_usd as user_payment
-        -- product_price_usd/total_order as shipping_ratio,
-        -- ROUND(shipping_cost_usd*shipping_ratio*oi.quantity, 2) as distributed_shipping_cost,
-        -- ROUND(shipping_cost_usd*shipping_ratio,2) as single_product_distributed_shipping_cost
+        s.shipping_cost_usd as order_shipping_cost_usd,
+        order_total_income_usd+s.shipping_cost_usd as order_total_plus_shipping,     
+        o.deleted,
+        o._fivetran_synced,
+        oi._fivetran_synced as _fivetran_synced_oi,
+        d._fivetran_synced as _fivetran_synced_d
 
         
     from cte_orders o 
@@ -72,11 +74,17 @@ renamed AS (
     on o.order_id = oi.order_id
     left join cte_promos d
     on o.promo_id = d.promo_id
-    left join cte_products p 
-    on oi.product_id = p.product_id
     left join cte_shipping s
     on o.order_id = s.order_id
     order by o.order_id
 )
 
 SELECT * FROM renamed
+
+{% if is_incremental() %}
+
+  where _fivetran_synced > (select max(_fivetran_synced) from {{ this }})
+  or _fivetran_synced > (select max(_fivetran_synced_oi) from {{ this }})
+  or _fivetran_synced > (select max(_fivetran_synced_d) from {{ this }})
+
+{% endif %}

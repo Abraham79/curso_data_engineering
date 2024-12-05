@@ -6,3 +6,5 @@
     END as {{ out_column_name }},
 
 {% endmacro %}
+
+/* Set duplicates in a column to null */

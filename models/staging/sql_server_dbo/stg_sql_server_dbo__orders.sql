@@ -1,3 +1,10 @@
+{{ config(
+    materialized='incremental',
+    unique_key = 'order_id'
+    ) 
+    }}
+
+
 with
 
     source as (select * from {{  ref('base_sql_server_dbo__orders') }}),
@@ -7,24 +14,23 @@ with
  
         select
             order_id,
-            --shipping_service_id,
-            --shipping_cost_usd,
-            --address_id,
+            address_id,
             order_date_utc,
-            -- promo_name,
             promo_id,
-            --estimated_delivery_date_utc,
-            order_cost_usd,         /* Shipping cost ads no value for the company */
+            order_cost_usd, 
             user_id,
-            -- order_total_usd,     /* Shipping cost ads no value for the company */
-            -- delivery_date_utc,
             tracking_id,
-            -- status,
             deleted,
-            insert_date_utc
+            _fivetran_synced
         from source 
 
     )
 
 select *
 from renamed
+
+{% if is_incremental() %}
+
+  where _fivetran_synced > (select max(_fivetran_synced) from {{ this }})
+
+{% endif %}

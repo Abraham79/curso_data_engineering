@@ -45,6 +45,64 @@ models:
         data_type: number
         description: "Amount spent on each product"
 
+  - name: mart_orders_by_address
+    description: "Order related calculations by address"
+    columns:
+      - name: header_line_hash
+        data_type: varchar
+        description: "Unique hash created to overcome Header/line issues"
+      - name: order_id
+        data_type: varchar
+        description: "Unique ID for each order"
+      - name: user_id
+        data_type: varchar
+        description: "Unique ID for each user"
+        tests:
+          - relationships:
+              field: user_id
+              to: ref('dim_users') 
+      - name: order_date_utc
+        data_type: timestamp_ntz
+        description: "Date of order"
+      - name: product_id
+        data_type: varchar
+        description: "Unique ID for each product"
+        tests:
+          - relationships:
+              field: product_id
+              to: ref('dim_products') 
+      - name: promo_id
+        data_type: varchar
+        description: "Unique ID for each promo"
+        tests:
+          - relationships:
+              field: promo_id
+              to: ref('dim_promos') 
+      - name: this_product_quantity
+        data_type: number
+        description: "Self descriptive"
+      - name: different_products_in_order
+        data_type: number
+        description: "Self descriptive"
+      - name: order_total_before_shipping_usd
+        data_type: number
+        description: "Order amount before shipping costs or discounts"
+      - name: order_total_income_usd
+        data_type: number
+        description: "What the company makes from the sale"
+      - name: address
+        data_type: varchar
+        description: "Self descriptive"
+      - name: zipcode
+        data_type: number
+        description: "Self descriptive"
+      - name: country
+        data_type: varchar
+        description: "Self descriptive"
+      - name: state
+        data_type: varchar
+        description: "Self descriptive"
+
   - name: mart_orders_by_date
     description: "Order related calculations"
     columns:
@@ -75,6 +133,91 @@ models:
         description: "Self descriptive"
       - name: year_number
         data_type: number
+        description: "Self descriptive"
+
+  - name: mart_orders_detail_extended
+    description: "Orders detail extended to achieve granularity at single product level"
+    columns:
+      - name: first_name
+        data_type: varchar
+        description: "Self descriptive"
+      - name: last_name
+        data_type: varchar
+        description: "Self descriptive"
+      - name: product_name
+        data_type: varchar
+        description: "Self descriptive"
+      - name: product_id
+        data_type: varchar
+        description: "Self descriptive"
+        tests:
+          - relationships:
+              field: product_id
+              to: ref('dim_products')
+      - name: promo_name
+        data_type: varchar
+        description: "Self descriptive"
+      - name: promo_id
+        data_type: varchar
+        description: "Self descriptive"
+        tests:
+          - relationships:
+              field: promo_id
+              to: ref('dim_promos')
+      - name: product_price_usd
+        data_type: varchar
+        description: "Self descriptive"
+
+  - name: mart_orders_detail_product_promo_names
+    description: "Orders detail including names for PowerBI"
+    columns:
+      - name: header_line_hash
+        data_type: varchar
+        description: "Unique hash created to overcome Header/line issues"
+      - name: order_id
+        data_type: varchar
+        description: "Unique ID for each order"
+      - name: user_id
+        data_type: varchar
+        description: "Unique ID for each user"
+        tests:
+          - relationships:
+              field: user_id
+              to: ref('dim_users') 
+      - name: order_date_utc
+        data_type: timestamp_ntz
+        description: "Date of order"
+      - name: product_id
+        data_type: varchar
+        description: "Unique ID for each product"
+        tests:
+          - relationships:
+              field: product_id
+              to: ref('dim_products') 
+      - name: promo_id
+        data_type: varchar
+        description: "Unique ID for each promo"
+        tests:
+          - relationships:
+              field: promo_id
+              to: ref('dim_promos') 
+      - name: this_product_quantity
+        data_type: number
+        description: "Self descriptive"
+      - name: different_products_in_order
+        data_type: number
+        description: "Self descriptive"
+      - name: order_total_before_shipping_usd
+        data_type: number
+        description: "Order amount before shipping costs or discounts"
+      - name: order_total_income_usd
+        data_type: number
+        description: "What the company makes from the sale"
+      - name: product_name
+        data_type: varchar
+        description: "Self descriptive"
+      - name: promo_name
+        data_type: varchar
         description: "Self descriptive"
 
   - name: mart_shipping_cost_per_order

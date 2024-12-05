@@ -1,6 +1,6 @@
 select *
 
-from ALUMNO1_DEV_SILVER_DB.ALUMNO1.STG_SQL_SERVER_DBO__SHIPPING
+from {{ ref('stg_sql_server_dbo__shipping') }}
 
 where status = 'delivered' and delivery_date_utc is null
 

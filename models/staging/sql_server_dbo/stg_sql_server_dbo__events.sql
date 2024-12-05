@@ -1,3 +1,10 @@
+{{ config(
+    materialized='incremental',
+    unique_key = 'event_id'
+    ) 
+    }}
+
+
 with 
 
 source as (
@@ -18,7 +25,7 @@ renamed as (
         {{ to_utc("created_at") }} as created_at_utc,
         nullif(trim(order_id), '') as order_id,
         _fivetran_deleted as deleted,
-        {{ to_utc("_fivetran_synced") }} as insert_date_utc
+        _fivetran_synced
        
 
     from source
@@ -26,3 +33,8 @@ renamed as (
 )
 
 select * from renamed
+{% if is_incremental() %}
+
+  where _fivetran_synced > (select max(_fivetran_synced) from {{ this }})
+
+{% endif %}

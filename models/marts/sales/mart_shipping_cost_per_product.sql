@@ -50,24 +50,27 @@ cte_promos as (
 renamed as (
     
     select 
-        
+
+        {{ dbt_utils.generate_surrogate_key(['o.order_id', 'o.order_date_utc']) }} as header_line_hash,        
         o.order_id,
         o.user_id,
         o.order_date_utc,
         p.product_id,
         o.promo_id,
         s.tracking_id,
-        p.product_price_usd,
+        p.product_price_usd as single_product_price_usd,
         o.this_product_quantity,
         p.product_price_usd*o.this_product_quantity as total_per_product_usd,
-        d.discount_usd as total_order_discount,
-
-        p.product_price_usd/o.order_total_before_shipping_usd as shipping_ratio,
-        round(discount_usd*shipping_ratio, 2) as distributed_product_discount_usd,
-        round(discount_usd*shipping_ratio*o.this_product_quantity, 2) as single_product_discount_usd,
-        round(total_per_product_usd-discount_usd*shipping_ratio, 2) as discounted_product_price_usd,
-        round(s.shipping_cost_usd*shipping_ratio*o.this_product_quantity, 2) as distributed_shipping_cost,
-        round(s.shipping_cost_usd*shipping_ratio,2) as single_product_distributed_shipping_cost
+        d.discount_usd as total_order_discount_usd,
+        o.order_total_before_shipping_usd as order_total_usd,
+        order_total_usd-total_order_discount_usd as discounted_order_total_usd,
+        s.shipping_cost_usd as order_shipping_cost_usd,
+        single_product_price_usd/o.order_total_before_shipping_usd as shipping_ratio,
+        d.discount_usd*shipping_ratio*o.this_product_quantity as distributed_product_discount_usd,
+        d.discount_usd*shipping_ratio as single_product_distributed_discount_usd,
+        product_price_usd-single_product_distributed_discount_usd as discounted_product_usd,
+        s.shipping_cost_usd*shipping_ratio*o.this_product_quantity as distributed_shipping_cost_usd,
+        s.shipping_cost_usd*shipping_ratio as single_product_distributed_shipping_cost_usd
 
         
     from cte_orders_detail o 

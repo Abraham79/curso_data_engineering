@@ -1,3 +1,9 @@
+{{ config(
+    materialized='incremental',
+    unique_key = 'promo_id'
+    ) 
+    }}
+
 with 
 
 source as (
@@ -15,7 +21,8 @@ renamed as (
         cast(discount as decimal(16,2)) as discount_usd,
         status,
         _fivetran_deleted as deleted,
-        {{ to_utc("_fivetran_synced") }} as insert_date_utc
+        {{ to_utc("_fivetran_synced") }} as insert_date_utc,
+        _fivetran_synced
 
     from source
     union all
@@ -25,8 +32,15 @@ renamed as (
         0,
         NULL,
         NULL,
+        NULL, 
         NULL
 
 )
 
 select * from renamed
+
+{% if is_incremental() %}
+
+  where _fivetran_synced > (select max(_fivetran_synced) from {{ this }})
+
+{% endif %}

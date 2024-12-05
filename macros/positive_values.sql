@@ -5,3 +5,5 @@
    where {{ column_name }} < 0
 
 {% endtest %}
+
+/* checks wether all returned values are positive */

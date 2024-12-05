@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: stg_google_sheets__budget
+    description: ""
+    columns:
+      - name: _row
+        data_type: number
+        description: "Unique ID for any budget"
+      - name: product_id
+        data_type: varchar
+        description: "Unique ID from each product"
+        tests:
+          - relationships:
+              field: product_id
+              to: ref('stg_sql_server_dbo__products')   
+      - name: quantity
+        data_type: number
+        description: "Stock available of such product in inventory"
+      - name: month
+        data_type: number
+        description: "Month new stock is added"
+      - name: insert_date_utc
+        data_type: timestamp_ntz
+        description: ""
