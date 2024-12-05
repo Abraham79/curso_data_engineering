@@ -30,6 +30,7 @@ cte_promos as (
 select *
 from {{ ref('dim_promos') }}), 
 
+
 renamed as (
 
     select 
@@ -39,7 +40,9 @@ renamed as (
             o.product_id,
             nullif(d.promo_name, 'no_promo') as promo_name,
             d.promo_id,
-            product_price_usd
+            p.product_price_usd,
+            p.product_price_usd/o.order_total_before_shipping_usd as value_ratio,
+            d.discount_usd*value_ratio as product_discount_usd
             
     from cte_orders_detail o
     join cte_products p 
