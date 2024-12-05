@@ -135,6 +135,39 @@ models:
         data_type: number
         description: "Self descriptive"
 
+  - name: mart_orders_detail_extended
+    description: "Orders detail extended to achieve granularity at single product level"
+    columns:
+      - name: first_name
+        data_type: varchar
+        description: "Self descriptive"
+      - name: last_name
+        data_type: varchar
+        description: "Self descriptive"
+      - name: product_name
+        data_type: varchar
+        description: "Self descriptive"
+      - name: product_id
+        data_type: varchar
+        description: "Self descriptive"
+        tests:
+          - relationships:
+              field: product_id
+              to: ref('dim_products')
+      - name: promo_name
+        data_type: varchar
+        description: "Self descriptive"
+      - name: promo_id
+        data_type: varchar
+        description: "Self descriptive"
+        tests:
+          - relationships:
+              field: promo_id
+              to: ref('dim_promos')
+      - name: product_price_usd
+        data_type: varchar
+        description: "Self descriptive"
+
   - name: mart_orders_detail_product_promo_names
     description: "Orders detail including names for PowerBI"
     columns:
