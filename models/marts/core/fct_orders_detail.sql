@@ -84,7 +84,7 @@ SELECT * FROM renamed
 {% if is_incremental() %}
 
   where _fivetran_synced > (select max(_fivetran_synced) from {{ this }})
-  and _fivetran_synced > (select max(_fivetran_synced_oi) from {{ this }})
-  and _fivetran_synced > (select max(_fivetran_synced_d) from {{ this }})
+  or _fivetran_synced > (select max(_fivetran_synced_oi) from {{ this }})
+  or _fivetran_synced > (select max(_fivetran_synced_d) from {{ this }})
 
 {% endif %}
